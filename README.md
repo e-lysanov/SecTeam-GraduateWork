@@ -1,1 +1,3 @@
-Материалы для выполнения курсовой работы учениками профессии java-разработчик. 
+# SecTeam-GraduateWork
+
+Участники команды: e-lysanov, Dmitriibeliaev97, Rijaia
