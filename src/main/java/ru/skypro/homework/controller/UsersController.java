@@ -1,5 +1,6 @@
 package ru.skypro.homework.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +14,9 @@ import ru.skypro.homework.service.UsersService;
 @Slf4j
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UsersController {
     private final UsersService usersService;
-
-    public UsersController(UsersService usersService) {
-        this.usersService = usersService;
-    }
 
     @PostMapping("/set_password")
     public NewPassword setPassword(@RequestBody NewPassword newPassword) {

@@ -1,5 +1,6 @@
 package ru.skypro.homework.controller;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,13 +12,10 @@ import ru.skypro.homework.service.CommentsService;
 @Slf4j
 @RestController
 @RequestMapping("/ads")
+@RequiredArgsConstructor
 public class CommentsController {
 
     private final CommentsService commentsService;
-
-    public CommentsController(CommentsService commentsService) {
-        this.commentsService = commentsService;
-    }
 
     @GetMapping("{id}/comments")
     public Comments getComments(@RequestParam int id) {
