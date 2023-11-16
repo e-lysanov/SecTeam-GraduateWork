@@ -1,8 +1,6 @@
-package ru.skypro.homework.dto.authorization;
+package ru.skypro.homework.dto.login;
 
 import lombok.Data;
-
-import javax.persistence.Entity;
 
 @Data
 //@Entity
