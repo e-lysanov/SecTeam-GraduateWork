@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.homework.dto.login.Login;
 import ru.skypro.homework.service.LoginService;
 
-@Slf4j
-@RestController
-@RequestMapping("/login")
-public class LoginController {
-    private final LoginService loginService;
-
-    public LoginController(LoginService loginService) {
-        this.loginService = loginService;
-    }
-
-    @PostMapping
-    public Login login(Login login) {
-        return loginService.login(login);
-    }
-}
+//@Slf4j
+//@RestController
+//@RequestMapping("/login")
+//public class LoginController {
+//    private final LoginService loginService;
+//
+//    public LoginController(LoginService loginService) {
+//        this.loginService = loginService;
+//    }
+//
+//    @PostMapping
+//    public Login login(Login login) {
+//        return loginService.login(login);
+//    }
+//}

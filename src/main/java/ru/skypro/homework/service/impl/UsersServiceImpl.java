@@ -1,11 +1,12 @@
 package ru.skypro.homework.service.impl;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.users.NewPassword;
 import ru.skypro.homework.dto.users.UpdateUser;
 import ru.skypro.homework.dto.users.User;
 import ru.skypro.homework.service.UsersService;
-
+@Service
 public class UsersServiceImpl implements UsersService {
     @Override
     public NewPassword setPassword(NewPassword newPassword) {
