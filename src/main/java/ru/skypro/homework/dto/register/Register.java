@@ -1,8 +1,12 @@
-package ru.skypro.homework.dto;
+package ru.skypro.homework.dto.register;
 
 import lombok.Data;
+import ru.skypro.homework.enums.Role;
+
+import javax.persistence.Entity;
 
 @Data
+@Entity
 public class Register {
 
     private String username;
