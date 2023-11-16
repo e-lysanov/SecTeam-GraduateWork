@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 
 @Data
-@Entity
+//@Entity
 public class UpdateUser {
     private String firstName;
     private String lastName;

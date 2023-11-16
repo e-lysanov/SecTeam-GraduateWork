@@ -6,7 +6,7 @@ import ru.skypro.homework.dto.comments.Comment;
 import javax.persistence.Entity;
 
 @Data
-@Entity
+//@Entity
 public class Comments {
     private int count;
     private Comment results;

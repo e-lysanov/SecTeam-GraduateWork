@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 
 @Data
-@Entity
+//@Entity
 public class CreateOrUpdateComment {
     private String text;
 }

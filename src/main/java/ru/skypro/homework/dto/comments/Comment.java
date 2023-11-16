@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 
 @Data
-@Entity
+//@Entity
 public class Comment {
     private int author;
     private String authorImage;

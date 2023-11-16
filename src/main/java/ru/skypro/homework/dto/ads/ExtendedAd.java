@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.Entity;
 
 @Data
-@Entity
+//@Entity
 public class ExtendedAd {
     private int pk;
     private String authorFirstName;

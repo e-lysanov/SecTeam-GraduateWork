@@ -6,7 +6,7 @@ import ru.skypro.homework.enums.Role;
 import javax.persistence.Entity;
 
 @Data
-@Entity
+//@Entity
 public class Register {
 
     private String username;
