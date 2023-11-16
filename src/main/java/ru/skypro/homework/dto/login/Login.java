@@ -1,8 +1,9 @@
-package ru.skypro.homework.dto;
+package ru.skypro.homework.dto.login;
 
 import lombok.Data;
 
 @Data
+//@Entity
 public class Login {
 
     private String username;
