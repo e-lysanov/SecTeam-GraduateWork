@@ -2,8 +2,11 @@ package ru.skypro.homework.dto.ads;
 
 import lombok.Data;
 
+/**
+ * Модель с информацией об объявлении
+ */
 @Data
-public class ExtendedAd {
+public class ExtendedAdDTO {
     private int pk;
     private String authorFirstName;
     private String authorLastName;

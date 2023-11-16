@@ -4,11 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.skypro.homework.dto.comments.Comments;
-import ru.skypro.homework.dto.comments.CreateOrUpdateComment;
+import ru.skypro.homework.dto.comments.CommentsDTO;
+import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
 import ru.skypro.homework.service.CommentsService;
 
-
+/**
+ * Контроллер для эндпоинтов комментариев.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/comments")
@@ -17,27 +19,51 @@ public class CommentsController {
 
     private final CommentsService commentsService;
 
+    /**
+     * Получение комментариев объявления
+     * @param id
+     * @return
+     */
     @GetMapping("{id}/comments")
-    public Comments getComments(@RequestParam int id) {
+    public CommentsDTO getComments(@RequestParam int id) {
         return commentsService.getComments(id);
     }
 
+    /**
+     * Добавление комментария к объявлению
+     * @param id
+     * @param text
+     * @return
+     */
     @PostMapping("{id}/comments")
-    public CreateOrUpdateComment addComment(@RequestParam int id,
-                                            @RequestBody CreateOrUpdateComment text) {
+    public CreateOrUpdateCommentDTO addComment(@RequestParam int id,
+                                               @RequestBody CreateOrUpdateCommentDTO text) {
         return commentsService.addComment(text);
     }
 
+    /**
+     * Удаление комментария
+     * @param adId
+     * @param commentId
+     * @return
+     */
     @DeleteMapping("{adId}/comments/{commentId}")
     public ResponseEntity deleteComment(@RequestParam int adId, @RequestParam int commentId) {
         commentsService.deleteComment(adId, commentId);
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Обновление комментария
+     * @param adId
+     * @param commentId
+     * @param text
+     * @return
+     */
     @PatchMapping("{adId}/comments/{commentId}")
-    public CreateOrUpdateComment updateComment(@RequestParam int adId,
-                                               @RequestParam int commentId,
-                                               @RequestBody CreateOrUpdateComment text) {
+    public CreateOrUpdateCommentDTO updateComment(@RequestParam int adId,
+                                                  @RequestParam int commentId,
+                                                  @RequestBody CreateOrUpdateCommentDTO text) {
         return commentsService.updateComment(adId, commentId, text);
     }
 

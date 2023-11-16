@@ -6,11 +6,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skypro.homework.dto.users.NewPassword;
-import ru.skypro.homework.dto.users.UpdateUser;
-import ru.skypro.homework.dto.users.User;
+import ru.skypro.homework.dto.users.NewPasswordDTO;
+import ru.skypro.homework.dto.users.UpdateUserDTO;
+import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.service.UsersService;
 
+/**
+ * Контроллер для эндпоинтов для работы с авторизованным пользователем.
+ */
 @Slf4j
 @RestController
 @RequestMapping("/users")
@@ -18,21 +21,40 @@ import ru.skypro.homework.service.UsersService;
 public class UsersController {
     private final UsersService usersService;
 
+    /**
+     * Обновление пароля
+     * @param newPassword
+     * @return
+     */
     @PostMapping("/set_password")
-    public NewPassword setPassword(@RequestBody NewPassword newPassword) {
+    public NewPasswordDTO setPassword(@RequestBody NewPasswordDTO newPassword) {
         return usersService.setPassword(newPassword);
     }
 
+    /**
+     * Получение информации об авторизованном пользователе
+     * @return
+     */
     @GetMapping("/me")
-    public User getUser() {
+    public UserDTO getUser() {
         return usersService.getUser();
     }
 
+    /**
+     * Обновление информации об авторизованном пользователе
+     * @param updateUser
+     * @return
+     */
     @PatchMapping("/me")
-    public UpdateUser updateUser(@RequestBody UpdateUser updateUser) {
+    public UpdateUserDTO updateUser(@RequestBody UpdateUserDTO updateUser) {
         return usersService.updateUser(updateUser);
     }
 
+    /**
+     * Обновление аватара авторизованного пользователя
+     * @param avatar
+     * @return
+     */
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> updateAvatar(@RequestBody MultipartFile avatar) {
         usersService.updateAvatar(avatar);

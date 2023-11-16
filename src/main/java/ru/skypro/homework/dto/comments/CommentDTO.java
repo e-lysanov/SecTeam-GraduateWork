@@ -2,8 +2,11 @@ package ru.skypro.homework.dto.comments;
 
 import lombok.Data;
 
+/**
+ * Модель ДТО комментария
+ */
 @Data
-public class Comment {
+public class CommentDTO {
     private int author;
     private String authorImage;
     private String authorFirstName;

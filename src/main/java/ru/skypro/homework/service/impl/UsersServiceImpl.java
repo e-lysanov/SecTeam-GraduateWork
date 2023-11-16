@@ -2,29 +2,52 @@ package ru.skypro.homework.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skypro.homework.dto.users.NewPassword;
-import ru.skypro.homework.dto.users.UpdateUser;
-import ru.skypro.homework.dto.users.User;
+import ru.skypro.homework.dto.users.NewPasswordDTO;
+import ru.skypro.homework.dto.users.UpdateUserDTO;
+import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.service.UsersService;
+
+/**
+ * Реализация сервиса для работы с пользователем
+ */
 @Service
 public class UsersServiceImpl implements UsersService {
+    /**
+     * Обновление пароля
+     * @param newPassword
+     * @return
+     */
     @Override
-    public NewPassword setPassword(NewPassword newPassword) {
+    public NewPasswordDTO setPassword(NewPasswordDTO newPassword) {
         return null;
     }
 
+    /**
+     * Получение информации об авторизованном пользователе
+     * @return
+     */
     @Override
-    public User getUser() {
+    public UserDTO getUser() {
         return null;
     }
 
+    /**
+     * Обновление информации об авторизованном пользователе
+     * @param updateUser
+     * @return
+     */
     @Override
-    public UpdateUser updateUser(UpdateUser updateUser) {
+    public UpdateUserDTO updateUser(UpdateUserDTO updateUser) {
         return null;
     }
 
+    /**
+     * Обновление аватара авторизованного пользователя
+     * @param avatar
+     * @return
+     */
     @Override
-    public User updateAvatar(MultipartFile avatar) {
+    public UserDTO updateAvatar(MultipartFile avatar) {
         return null;
     }
 }

@@ -5,9 +5,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
-import ru.skypro.homework.dto.register.Register;
+import ru.skypro.homework.dto.register.RegisterDTO;
 import ru.skypro.homework.service.AuthService;
 
+/**
+ * Реализация сервиса для авторизации и регистрации
+ */
 @Service
 public class AuthServiceImpl implements AuthService {
 
@@ -20,6 +23,13 @@ public class AuthServiceImpl implements AuthService {
         this.encoder = passwordEncoder;
     }
 
+    /**
+     * Авторизация
+     * @param userName
+     * @param password
+     * @return
+     */
+
     @Override
     public boolean login(String userName, String password) {
         if (!manager.userExists(userName)) {
@@ -29,8 +39,13 @@ public class AuthServiceImpl implements AuthService {
         return encoder.matches(password, userDetails.getPassword());
     }
 
+    /**
+     * Регистрация
+     * @param register
+     * @return
+     */
     @Override
-    public boolean register(Register register) {
+    public boolean register(RegisterDTO register) {
         if (manager.userExists(register.getUsername())) {
             return false;
         }

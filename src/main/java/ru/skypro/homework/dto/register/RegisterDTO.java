@@ -3,8 +3,11 @@ package ru.skypro.homework.dto.register;
 import lombok.Data;
 import ru.skypro.homework.enums.Role;
 
+/**
+ * Модель ДТО регистрации
+ */
 @Data
-public class Register {
+public class RegisterDTO {
 
     private String username;
     private String password;

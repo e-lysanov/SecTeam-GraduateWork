@@ -3,9 +3,11 @@ package ru.skypro.homework.dto.users;
 import lombok.Data;
 import ru.skypro.homework.enums.Role;
 
-
+/**
+ * Модель ДТО пользователя
+ */
 @Data
-public class User {
+public class UserDTO {
     private int id;
     private String email;
     private String firstName;

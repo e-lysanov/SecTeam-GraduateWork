@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skypro.homework.dto.login.Login;
-import ru.skypro.homework.dto.register.Register;
+import ru.skypro.homework.dto.login.LoginDTO;
+import ru.skypro.homework.dto.register.RegisterDTO;
 import ru.skypro.homework.service.AuthService;
 
+/**
+ * Контроллер для авторизации и регистрации.
+ */
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
@@ -20,8 +23,13 @@ public class AuthController {
 
     private final AuthService authService;
 
+    /**
+     * Авторизация пользователя
+     * @param login
+     * @return
+     */
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Login login) {
+    public ResponseEntity<?> login(@RequestBody LoginDTO login) {
         if (authService.login(login.getUsername(), login.getPassword())) {
             return ResponseEntity.ok().build();
         } else {
@@ -29,8 +37,13 @@ public class AuthController {
         }
     }
 
+    /**
+     * Регистрация пользователя
+     * @param register
+     * @return
+     */
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody Register register) {
+    public ResponseEntity<?> register(@RequestBody RegisterDTO register) {
         if (authService.register(register)) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
