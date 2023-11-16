@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class Ads {
     private int count;
-    private Ad result;
+    private Ad results;
 }

@@ -18,7 +18,6 @@ public class CommentsServiceImpl implements CommentsService {
 
     @Override
     public void deleteComment(int adId, int commentId) {
-
     }
 
     @Override

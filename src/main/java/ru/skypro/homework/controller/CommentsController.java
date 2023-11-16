@@ -11,7 +11,7 @@ import ru.skypro.homework.service.CommentsService;
 
 @Slf4j
 @RestController
-@RequestMapping("/ads")
+@RequestMapping("/comments")
 @RequiredArgsConstructor
 public class CommentsController {
 
