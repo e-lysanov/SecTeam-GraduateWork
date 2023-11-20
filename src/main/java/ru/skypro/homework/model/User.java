@@ -1,5 +1,6 @@
 package ru.skypro.homework.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import ru.skypro.homework.enums.Role;
@@ -12,6 +13,7 @@ import java.util.Collection;
  */
 @Data
 @Entity(name = "Users")
+@JsonIgnoreProperties(value = {"ads", "comments"})
 public class User {
     @Id
     @GeneratedValue
@@ -22,10 +24,10 @@ public class User {
     private String phone;
     private Role role;
     private String image;
-//    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-//    @JsonManagedReference
-//    private Collection<Ad> ads;
-//    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-//    @JsonManagedReference
-//    private Collection<Comment> comments;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Collection<Ad> ads;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Collection<Comment> comments;
 }
