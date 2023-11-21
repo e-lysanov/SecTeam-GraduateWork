@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Entity(name = "Ads")
 public class Ad {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
     @JoinColumn(name = "user_id")
     private User author;
     private String image;
