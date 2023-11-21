@@ -10,6 +10,5 @@ import ru.skypro.homework.model.User;
 @Mapper
 public interface UserMapper {
     UserDTO toDto(User user);
-
-//    User toModel()
+    User toModel(UserDTO userDTO);
 }
