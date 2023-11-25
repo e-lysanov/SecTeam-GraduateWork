@@ -31,13 +31,13 @@ public class AdsController {
 
     /**
      * Добавление объявления
-     * @param createOrUpdateAd
+     * @param adDTO
      * @param image
      * @return
      */
     @PostMapping
-    public AdDTO addAd(@RequestBody CreateOrUpdateAdDTO createOrUpdateAd, @RequestBody MultipartFile image) {
-        return adsService.addAd(createOrUpdateAd, image);
+    public AdDTO addAd(@RequestBody AdDTO adDTO, @RequestBody MultipartFile image) {
+        return adsService.addAd(adDTO, image);
     }
 
     /**

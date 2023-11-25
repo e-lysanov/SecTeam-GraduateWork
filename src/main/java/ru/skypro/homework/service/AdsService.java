@@ -9,7 +9,7 @@ import ru.skypro.homework.dto.ads.ExtendedAdDTO;
 public interface AdsService {
     AdsDTO getAds();
 
-    AdDTO addAd(CreateOrUpdateAdDTO createOrUpdateAd, MultipartFile image);
+    AdDTO addAd(AdDTO adDTO, MultipartFile image);
 
     ExtendedAdDTO getAd(int id);
 
