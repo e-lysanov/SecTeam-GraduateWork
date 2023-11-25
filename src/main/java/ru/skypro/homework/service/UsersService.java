@@ -9,5 +9,5 @@ public interface UsersService {
     NewPasswordDTO setPassword(NewPasswordDTO newPassword);
     UserDTO getUser();
     UpdateUserDTO updateUser(UpdateUserDTO updateUser);
-    UserDTO updateAvatar(MultipartFile avatar);
+    void updateAvatar(MultipartFile avatar);
 }
