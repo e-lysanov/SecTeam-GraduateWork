@@ -41,10 +41,11 @@ public class AuthController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO login) {
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Authorization", );
+        HttpHeaders response = new HttpHeaders();
+        response.setAccessControlAllowOrigin("*");
+//        response.add("Authorization Basic base64Encode(user:password)", login.getUsername());
         if (authService.login(login.getUsername(), login.getPassword())) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().headers(response).build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -57,8 +58,10 @@ public class AuthController {
      */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO register) {
+        HttpHeaders response = new HttpHeaders();
+        response.setAccessControlAllowOrigin("*");
         if (authService.register(register)) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            return ResponseEntity.status(HttpStatus.CREATED).headers(response).build();
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

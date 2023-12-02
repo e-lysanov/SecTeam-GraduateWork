@@ -1,6 +1,7 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,9 +16,9 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class MyUserDetailsService implements UserDetailsService {
 
-    private final Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
     private final UserRepository userRepository;
 
     @Override
