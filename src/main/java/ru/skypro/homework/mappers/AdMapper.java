@@ -10,7 +10,7 @@ import ru.skypro.homework.model.User;
 /**
  * Маппер объявлений
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface AdMapper {
     @Mapping(source = "user.id", target = "author")
     @Mapping(source = "ad.image", target = "image")

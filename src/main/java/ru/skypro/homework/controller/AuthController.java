@@ -1,10 +1,16 @@
 package ru.skypro.homework.controller;
 
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext;
+import io.swagger.v3.oas.annotations.headers.Header;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.http.parser.Authorization;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.skypro.homework.dto.login.LoginDTO;
 import ru.skypro.homework.dto.register.RegisterDTO;
 import ru.skypro.homework.service.AuthService;
+
+import javax.persistence.Basic;
+import javax.websocket.RemoteEndpoint;
+import java.util.Collections;
 
 /**
  * Контроллер для авторизации и регистрации.
@@ -31,6 +41,8 @@ public class AuthController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO login) {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Authorization", );
         if (authService.login(login.getUsername(), login.getPassword())) {
             return ResponseEntity.ok().build();
         } else {

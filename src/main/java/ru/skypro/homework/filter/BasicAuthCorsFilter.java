@@ -1,6 +1,9 @@
 package ru.skypro.homework.filter;
 
 
+import io.swagger.v3.oas.annotations.headers.Header;
+import org.apache.tomcat.util.http.parser.Authorization;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
