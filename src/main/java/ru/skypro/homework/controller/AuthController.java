@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.headers.Header;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import ru.skypro.homework.service.AuthService;
 
 import javax.persistence.Basic;
 import javax.websocket.RemoteEndpoint;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 
 /**
@@ -41,7 +43,13 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO login) {
         HttpHeaders response = new HttpHeaders();
-        response.setAccessControlAllowOrigin("*");
+        response.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        String auth = login.getUsername() + ":" + login.getPassword();
+        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.US_ASCII));
+//        response.add("Authorization", "Basic " + new String(encodedAuth));
+        response.add("Authorization", "Basic base64Encode(" + auth + ")");
+
+//        response.setAccessControlAllowOrigin("*");
         if (authService.login(login.getUsername(), login.getPassword())) {
             return ResponseEntity.ok().headers(response).build();
         } else {
