@@ -25,12 +25,12 @@ public class AdsServiceImpl implements AdsService {
 
     /**
      * Добавление объявления
-     * @param createOrUpdateAd
+     * @param adDTO
      * @param image
      * @return
      */
     @Override
-    public AdDTO addAd(CreateOrUpdateAdDTO createOrUpdateAd, MultipartFile image) {
+    public AdDTO addAd(AdDTO adDTO, MultipartFile image) {
         return null;
     }
 

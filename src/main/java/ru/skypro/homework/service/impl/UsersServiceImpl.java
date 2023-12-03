@@ -43,11 +43,10 @@ public class UsersServiceImpl implements UsersService {
 
     /**
      * Обновление аватара авторизованного пользователя
+     *
      * @param avatar
-     * @return
      */
     @Override
-    public UserDTO updateAvatar(MultipartFile avatar) {
-        return null;
+    public void updateAvatar(MultipartFile avatar) {
     }
 }

@@ -10,7 +10,7 @@ import ru.skypro.homework.model.User;
 /**
  * Маппер комментариев
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CommentMapper {
     @Mapping(source = "user.id", target = "author")
     CommentDTO toDto(Comment comment, User user);
