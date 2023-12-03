@@ -6,5 +6,5 @@ import ru.skypro.homework.model.Ad;
 /**
  * Репозиторий для связи с таблицей объявлений из БД.
  */
-public interface AdRepository extends JpaRepository<Ad, Long> {
+public interface AdRepository extends JpaRepository<Ad, Integer> {
 }

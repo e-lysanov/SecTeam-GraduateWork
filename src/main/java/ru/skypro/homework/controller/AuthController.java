@@ -1,6 +1,5 @@
 package ru.skypro.homework.controller;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext;
 import io.swagger.v3.oas.annotations.headers.Header;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -43,10 +42,10 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginDTO login) {
         HttpHeaders response = new HttpHeaders();
         response.setAccessControlAllowOrigin("*");
-//        response.add("Authorization Basic base64Encode(user:password)", login.getUsername());
         if (authService.login(login.getUsername(), login.getPassword())) {
             return ResponseEntity.ok().headers(response).build();
         } else {
+            log.info("Эндпоинт логина прошёл");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -63,6 +62,7 @@ public class AuthController {
         if (authService.register(register)) {
             return ResponseEntity.status(HttpStatus.CREATED).headers(response).build();
         } else {
+            log.info("Эндпоинт регистрации прошёл");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

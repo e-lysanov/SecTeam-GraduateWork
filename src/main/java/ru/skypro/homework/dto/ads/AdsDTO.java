@@ -11,4 +11,7 @@ import java.util.Collection;
 public class AdsDTO {
     private int count;
     private Collection<AdDTO> results;
+
+    public AdsDTO(int count, Collection<AdDTO> results) {
+    }
 }

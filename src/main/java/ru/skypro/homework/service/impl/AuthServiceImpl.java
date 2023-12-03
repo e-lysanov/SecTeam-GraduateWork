@@ -39,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
         if (userDetails == null) {
             return false;
         }
+        log.info("Метод Логин сработал");
         return encoder.matches(encoder.encode(password), userDetails.getPassword());
     }
 
@@ -53,8 +54,10 @@ public class AuthServiceImpl implements AuthService {
             return false;
         }
         register.setPassword(encoder.encode(register.getPassword()));
+        log.info("Пароль при регистрации закодировался");
         User user = userMapper.registerToModel(register);
         userRepository.save(user);
+        log.info("Метод регистрации прошёл, пользователь сохранен в БД");
         return true;
     }
 

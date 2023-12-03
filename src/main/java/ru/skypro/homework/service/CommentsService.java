@@ -3,6 +3,8 @@ package ru.skypro.homework.service;
 import ru.skypro.homework.dto.comments.CommentsDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
 
+import java.util.List;
+
 public interface CommentsService {
     CommentsDTO getComments(int id);
     CreateOrUpdateCommentDTO addComment(CreateOrUpdateCommentDTO text);

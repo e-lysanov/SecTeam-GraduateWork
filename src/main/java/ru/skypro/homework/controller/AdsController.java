@@ -11,6 +11,8 @@ import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
 import ru.skypro.homework.service.AdsService;
 
+import java.util.List;
+
 /**
  * Контроллер для эндпоинтов объявлений.
  */
@@ -37,8 +39,8 @@ public class AdsController {
      * @return
      */
     @PostMapping
-    public AdDTO addAd(@RequestBody AdDTO adDTO, @RequestBody MultipartFile image) {
-        return adsService.addAd(adDTO, image);
+    public void addAd(@RequestBody AdDTO adDTO, @RequestBody MultipartFile image) {
+        adsService.addAd(adDTO, image);
     }
 
     /**
