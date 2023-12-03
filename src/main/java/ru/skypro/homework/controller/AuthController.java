@@ -50,10 +50,11 @@ public class AuthController {
         response.add("Authorization", "Basic base64Encode(" + auth + ")");
 
 //        response.setAccessControlAllowOrigin("*");
-        if (authService.login(login.getUsername(), login.getPassword())) {
+        if (authService.login(login)) {
+            log.info("Эндпоинт логина прошёл");
             return ResponseEntity.ok().headers(response).build();
         } else {
-            log.info("Эндпоинт логина прошёл");
+            log.info("Эндпоинт логина не прошёл");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -68,9 +69,10 @@ public class AuthController {
         HttpHeaders response = new HttpHeaders();
         response.setAccessControlAllowOrigin("*");
         if (authService.register(register)) {
+            log.info("Эндпоинт регистрации прошёл");
             return ResponseEntity.status(HttpStatus.CREATED).headers(response).build();
         } else {
-            log.info("Эндпоинт регистрации прошёл");
+            log.info("Эндпоинт регистрации не прошёл");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

@@ -2,11 +2,10 @@ package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.skypro.homework.dto.login.LoginDTO;
 import ru.skypro.homework.dto.register.RegisterDTO;
 import ru.skypro.homework.mappers.UserMapper;
 import ru.skypro.homework.model.User;
@@ -28,19 +27,18 @@ public class AuthServiceImpl implements AuthService {
 
     /**
      * Авторизация
-     * @param userName
-     * @param password
+     * @param loginDTO
      * @return
      */
 
     @Override
-    public boolean login(String userName, String password) {
-        UserDetails userDetails = myUserDetailsService.loadUserByUsername(userName);
+    public boolean login(LoginDTO loginDTO) {
+        UserDetails userDetails = myUserDetailsService.loadUserByUsername(loginDTO.getUsername());
         if (userDetails == null) {
             return false;
         }
         log.info("Метод Логин сработал");
-        return encoder.matches(encoder.encode(password), userDetails.getPassword());
+        return encoder.matches(encoder.encode(loginDTO.getPassword()), userDetails.getPassword());
     }
 
     /**
