@@ -42,19 +42,9 @@ public class AuthController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO login) {
-        HttpHeaders response = new HttpHeaders();
-        response.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        String auth = login.getUsername() + ":" + login.getPassword();
-        byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(StandardCharsets.US_ASCII));
-//        response.add("Authorization", "Basic " + new String(encodedAuth));
-        response.add("Authorization", "Basic base64Encode(" + auth + ")");
-
-//        response.setAccessControlAllowOrigin("*");
         if (authService.login(login)) {
-            log.info("Эндпоинт логина прошёл");
-            return ResponseEntity.ok().headers(response).build();
+            return ResponseEntity.ok().build();
         } else {
-            log.info("Эндпоинт логина не прошёл");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -66,11 +56,9 @@ public class AuthController {
      */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO register) {
-        HttpHeaders response = new HttpHeaders();
-        response.setAccessControlAllowOrigin("*");
         if (authService.register(register)) {
             log.info("Эндпоинт регистрации прошёл");
-            return ResponseEntity.status(HttpStatus.CREATED).headers(response).build();
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
             log.info("Эндпоинт регистрации не прошёл");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

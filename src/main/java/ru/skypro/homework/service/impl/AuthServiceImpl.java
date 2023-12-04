@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
             return false;
         }
         log.info("Метод Логин сработал");
-        return encoder.matches(encoder.encode(loginDTO.getPassword()), userDetails.getPassword());
+        return encoder.matches(loginDTO.getPassword(), userDetails.getPassword());
     }
 
     /**
