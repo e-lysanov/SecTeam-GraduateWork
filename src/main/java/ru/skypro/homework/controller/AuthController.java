@@ -43,8 +43,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO login) {
         if (authService.login(login)) {
+            log.info("Эндпоинт входа выполнен");
             return ResponseEntity.ok().build();
         } else {
+            log.info("Эндпоинт входа не выполнен");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
@@ -57,10 +59,10 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO register) {
         if (authService.register(register)) {
-            log.info("Эндпоинт регистрации прошёл");
+            log.info("Эндпоинт регистрации выполнен");
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
-            log.info("Эндпоинт регистрации не прошёл");
+            log.info("Эндпоинт регистрации не выполнен");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

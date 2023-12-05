@@ -9,6 +9,7 @@ import ru.skypro.homework.dto.ads.AdDTO;
 import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
+import ru.skypro.homework.model.Ad;
 import ru.skypro.homework.service.AdsService;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class AdsController {
      */
     @GetMapping
     public AdsDTO getAds() {
+        log.info("Эндпоинт получения всех объявлений выполнен");
         return adsService.getAds();
     }
 
@@ -39,8 +41,9 @@ public class AdsController {
      * @return
      */
     @PostMapping
-    public void addAd(@RequestBody AdDTO adDTO, @RequestBody MultipartFile image) {
-        adsService.addAd(adDTO, image);
+    public Ad addAd(@RequestBody AdDTO adDTO, @RequestBody MultipartFile image) {
+        log.info("Эндпоинт добавления нового объявления выполнен");
+       return adsService.addAd(adDTO, image);
     }
 
     /**

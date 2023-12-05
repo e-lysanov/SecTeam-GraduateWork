@@ -6,6 +6,6 @@ import ru.skypro.homework.model.User;
 /**
  * Репозиторий для связи с таблицей пользователей из БД.
  */
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
 }

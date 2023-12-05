@@ -37,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
         if (userDetails == null) {
             return false;
         }
-        log.info("Метод Логин сработал");
+        log.info("Метод входа выполнен");
         return encoder.matches(loginDTO.getPassword(), userDetails.getPassword());
     }
 
@@ -55,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
         log.info("Пароль при регистрации закодировался");
         User user = userMapper.registerToModel(register);
         userRepository.save(user);
-        log.info("Метод регистрации прошёл, пользователь сохранен в БД");
+        log.info("Метод регистрации выполнен, пользователь сохранен в БД");
         return true;
     }
 
