@@ -12,13 +12,13 @@ public interface AdsService {
 
     Ad addAd(AdDTO adDTO, MultipartFile image);
 
-    ExtendedAdDTO getAd(int id);
+    ExtendedAdDTO getAd(long id);
 
-    void deleteAd(int id);
+    void deleteAd(long id);
 
-    AdDTO updateAd(int id, CreateOrUpdateAdDTO createOrUpdateAd);
+    AdDTO updateAd(long id, CreateOrUpdateAdDTO createOrUpdateAd);
 
     AdsDTO getMyAds();
 
-    AdDTO updateAvatar(int id, MultipartFile image);
+    AdDTO updateAvatar(long id, MultipartFile image);
 }

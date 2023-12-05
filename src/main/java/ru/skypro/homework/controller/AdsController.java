@@ -53,6 +53,7 @@ public class AdsController {
      */
     @GetMapping("{id}")
     public ExtendedAdDTO getInfoAd(@RequestParam int id) {
+        log.info("Эндпоинт получения информации об объявлении выполнен");
         return adsService.getAd(id);
     }
 
@@ -63,6 +64,7 @@ public class AdsController {
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteAd(@RequestParam int id) {
         adsService.deleteAd(id);
+        log.info("Эндпоинт удаления объявления выполнен");
         return ResponseEntity.ok().build();
     }
 
@@ -74,6 +76,7 @@ public class AdsController {
      */
     @PatchMapping("{id}")
     public AdDTO updateAd(@RequestParam int id, @RequestBody CreateOrUpdateAdDTO createOrUpdateAd) {
+        log.info("Эндпоинт обновления объявления выполнен");
         return adsService.updateAd(id, createOrUpdateAd);
     }
 
@@ -95,7 +98,9 @@ public class AdsController {
     @PatchMapping("/{id}/image")
     public ResponseEntity<String> updateAvatar(@RequestParam int id, @RequestBody MultipartFile image) {
         adsService.updateAvatar(id, image);
-        return ResponseEntity.ok(image.toString());
+        log.info("Эндпоинт обновления картинки объявления выполнен");
+//        return ResponseEntity.ok(image.toString()); --- вернуть, когда настроим сохранение картинок
+        return ResponseEntity.ok().build();
     }
 
     }

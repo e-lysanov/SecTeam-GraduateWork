@@ -46,8 +46,9 @@ public class AdsServiceImpl implements AdsService {
             AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
             adsDTO.add(adDTO);
         }
+        AdsDTO adsDTOs = new AdsDTO(adsDTO.size(), adsDTO);
         log.info("Метод получения всех объявлений выполнен");
-        return new AdsDTO(adsDTO.size(), adsDTO);
+        return adsDTOs;
     }
 
     /**
@@ -76,8 +77,12 @@ public class AdsServiceImpl implements AdsService {
      * @return
      */
     @Override
-    public ExtendedAdDTO getAd(int id) {
-        return null;
+    public ExtendedAdDTO getAd(long id) {
+        Ad ad = adRepository.findById(id).orElse(null);
+        User user = ad.getAuthor();
+        ExtendedAdDTO extendedAdDTO = adMapper.toExtendedDTO(ad, user);
+        log.info("Метод получения информации об объявлении выполнен");
+        return extendedAdDTO;
     }
 
     /**
@@ -86,8 +91,9 @@ public class AdsServiceImpl implements AdsService {
      * @param id
      */
     @Override
-    public void deleteAd(int id) {
-
+    public void deleteAd(long id) {
+        Ad ad = adRepository.findById(id).orElse(null);
+        log.info("Метод удаления объявления выполнен");
     }
 
     /**
@@ -98,8 +104,16 @@ public class AdsServiceImpl implements AdsService {
      * @return
      */
     @Override
-    public AdDTO updateAd(int id, CreateOrUpdateAdDTO createOrUpdateAd) {
-        return null;
+    public AdDTO updateAd(long id, CreateOrUpdateAdDTO createOrUpdateAd) {
+        Ad ad = adRepository.findById(id).orElse(null);
+        if (ad == null) {
+            return null;
+        }
+            UserDTO userDTO = userMapper.toDto(ad.getAuthor());
+            Ad savedAd = adRepository.save(adMapper.updateAdToModel(createOrUpdateAd, userDTO));
+            AdDTO adDTO = adMapper.toDto(savedAd, ad.getAuthor());
+            log.info("Метод обновления объявления выполнен");
+        return adDTO;
     }
 
     /**
@@ -120,7 +134,12 @@ public class AdsServiceImpl implements AdsService {
      * @return
      */
     @Override
-    public AdDTO updateAvatar(int id, MultipartFile image) {
-        return null;
+    public AdDTO updateAvatar(long id, MultipartFile image) {
+        Ad ad = adRepository.findById(id).orElse(null);
+        User user = ad.getAuthor();
+        AdDTO adDTO = adMapper.toDto(ad, user);
+//        adDTO.setImage(image.toString()); --- сохранение картинок пока не прописано
+        log.info("Метод обновления картинки объявления выполнен");
+        return adDTO;
     }
 }
