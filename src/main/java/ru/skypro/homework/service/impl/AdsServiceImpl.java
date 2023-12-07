@@ -2,6 +2,8 @@ package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.ads.AdDTO;
@@ -62,20 +64,20 @@ public class AdsServiceImpl implements AdsService {
     /**
      * Добавление объявления
      *
-     * @param adDTO
+     * @param createAdDTO
      * @param image
      * @return
      */
     @Override
-    public Ad addAd(AdDTO adDTO, MultipartFile image) {
-        long userId = adDTO.getAuthor();
-        User user = userRepository.findById(userId).orElse(null);
-        UserDTO userDTO = userMapper.toDto(user);
-        Ad newAd = adMapper.toModel(adDTO, userDTO);
-//        newAd.setImage(image.toString()); --- сохранение картинки пока не поддерживается
-        adRepository.save(newAd);
+    public AdDTO addAd(CreateOrUpdateAdDTO createAdDTO, MultipartFile image) {
+// ----- необходимо получить автора объявления
+
+//        Ad ad = adMapper.toModel(createAdDTO, createAdDTO.getAuthor());
+//
+//        AdDTO newAd = adMapper.toDto(createAdDTO, userDTO);
+//        adRepository.save(ad);
         log.info("Метод добавления объявления выполнен");
-        return newAd;
+        return null;
     }
 
     /**
@@ -100,7 +102,7 @@ public class AdsServiceImpl implements AdsService {
      */
     @Override
     public void deleteAd(long id) {
-        Ad ad = adRepository.findById(id).orElse(null);
+        adRepository.deleteById(id);
         log.info("Метод удаления объявления выполнен");
     }
 

@@ -36,14 +36,14 @@ public class AdsController {
 
     /**
      * Добавление объявления
-     * @param adDTO
+     * @param createAdDTO
      * @param image
      * @return
      */
     @PostMapping
-    public Ad addAd(@RequestBody AdDTO adDTO, @RequestBody MultipartFile image) {
+    public AdDTO addAd(@RequestBody CreateOrUpdateAdDTO createAdDTO, @RequestBody MultipartFile image) {
         log.info("Эндпоинт добавления нового объявления выполнен");
-       return adsService.addAd(adDTO, image);
+       return adsService.addAd(createAdDTO, image);
     }
 
     /**
