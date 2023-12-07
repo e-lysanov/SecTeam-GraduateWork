@@ -28,8 +28,8 @@ public class UsersController {
      * @return
      */
     @PostMapping("/set_password")
-    public NewPasswordDTO setPassword(@RequestBody NewPasswordDTO newPassword) {
-        return usersService.setPassword(newPassword);
+    public void setPassword(@RequestBody NewPasswordDTO newPassword) {
+        usersService.setPassword(newPassword);
     }
 
     /**

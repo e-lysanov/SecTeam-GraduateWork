@@ -3,6 +3,7 @@ package ru.skypro.homework.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.skypro.homework.dto.comments.CommentDTO;
+import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
 import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
@@ -16,4 +17,8 @@ public interface CommentMapper {
     CommentDTO toDto(Comment comment, User user);
     @Mapping(source = "userDTO", target = "author")
     Comment toModel(CommentDTO commentDTO, UserDTO userDTO);
+
+    Comment toCreateModel(CreateOrUpdateCommentDTO commentDTO);
+
+    CreateOrUpdateCommentDTO toCreateModel(Comment comment, User user);
 }

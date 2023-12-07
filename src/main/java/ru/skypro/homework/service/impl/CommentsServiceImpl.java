@@ -1,13 +1,24 @@
 package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.skypro.homework.dto.ads.AdDTO;
+import ru.skypro.homework.dto.ads.AdsDTO;
+import ru.skypro.homework.dto.comments.CommentDTO;
 import ru.skypro.homework.dto.comments.CommentsDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
+import ru.skypro.homework.dto.users.UserDTO;
+import ru.skypro.homework.mappers.AdMapper;
 import ru.skypro.homework.mappers.CommentMapper;
+import ru.skypro.homework.model.Ad;
+import ru.skypro.homework.model.Comment;
+import ru.skypro.homework.model.User;
+import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.CommentRepository;
 import ru.skypro.homework.service.CommentsService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,47 +27,85 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CommentsServiceImpl implements CommentsService {
     private final CommentRepository commentRepository;
+    private final AdRepository adRepository;
     private final CommentMapper commentMapper;
+    private final AdMapper adMapper;
+
     /**
      * Получение комментариев объявления
+     *
      * @param id
      * @return
      */
     @Override
-    public CommentsDTO getComments(int id) {
-        return null;
+    public CommentsDTO getComments(long id) {
+        List<Comment> comments = commentRepository.findCommentsByAdPk(id);
+        List<CommentDTO> commentsDTO = new ArrayList<>();
+        for (Comment comment : comments) {
+            CommentDTO commentDTO = commentMapper.toDto(comment, comment.getAuthor());
+            commentsDTO.add(commentDTO);
+        }
+        CommentsDTO commentsDTOs = new CommentsDTO(commentsDTO.size(), commentsDTO);
+        log.info("Метод получения комментариев объявления выполнен");
+        return commentsDTOs;
     }
 
     /**
      * Добавление комментария к объявлению
+     *
      * @param text
      * @return
      */
     @Override
-    public CreateOrUpdateCommentDTO addComment(CreateOrUpdateCommentDTO text) {
-        return null;
+    public Comment addComment(long id, CreateOrUpdateCommentDTO text) {
+        Ad ad = adRepository.findById(id).orElse(null);
+        Comment newComment = commentMapper.toCreateModel(text);
+        commentRepository.save(newComment);
+        newComment.setAd(ad);
+        log.info("Метод добавления комментария выполнен");
+        return newComment;
     }
 
     /**
      * Удаление комментария
+     *
      * @param adId
      * @param commentId
      */
     @Override
-    public void deleteComment(int adId, int commentId) {
+    public void deleteComment(long adId, long commentId) {
+        List<Comment> comments = commentRepository.findCommentsByAdPk(adId);
+        for (int i = 0; i < comments.size(); i++) {
+            commentRepository.deleteById(commentId);
+        }
+        log.info("Метод удаления объявления выполнен");
     }
 
     /**
      * Обновление комментария
+     *
      * @param adId
      * @param commentId
      * @param text
      * @return
      */
     @Override
-    public CreateOrUpdateCommentDTO updateComment(int adId, int commentId, CreateOrUpdateCommentDTO text) {
+    public CreateOrUpdateCommentDTO updateComment(long adId, long commentId, CreateOrUpdateCommentDTO text) {
+        Comment savedComment = commentRepository.findById(commentId).orElse(null);
+        List<Comment> adComments = commentRepository.findCommentsByAdPk(adId);
+        for (int i = 0; i < adComments.size(); i++) {
+            if (i == commentId){
+                Comment newComment = commentMapper.toCreateModel(text);
+                commentRepository.save(newComment);
+                CreateOrUpdateCommentDTO createOrUpdateCommentDTO = commentMapper.toCreateModel(newComment, newComment.getAuthor());
+                log.info("Метод обновления комментария выполнен, текст обновлен");
+                return createOrUpdateCommentDTO;
+            }
+        }
+        log.info("Метод обновления выполнен, текст не обновлен, произошла ошибка");
         return null;
     }
 }

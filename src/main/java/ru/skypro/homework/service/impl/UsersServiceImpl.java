@@ -24,8 +24,8 @@ public class UsersServiceImpl implements UsersService {
      * @return
      */
     @Override
-    public NewPasswordDTO setPassword(NewPasswordDTO newPassword) {
-        return null;
+    public void setPassword(NewPasswordDTO newPassword) {
+
     }
 
     /**

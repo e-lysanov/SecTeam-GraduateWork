@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.comments.CommentsDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
+import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.service.CommentsService;
 
 /**
@@ -25,7 +26,8 @@ public class CommentsController {
      * @return
      */
     @GetMapping("{id}/comments")
-    public CommentsDTO getComments(@RequestParam int id) {
+    public CommentsDTO getComments(@RequestParam long id) {
+        log.info("Эндпоинт получения комментариев объявления выполнен");
         return commentsService.getComments(id);
     }
 
@@ -36,9 +38,10 @@ public class CommentsController {
      * @return
      */
     @PostMapping("{id}/comments")
-    public CreateOrUpdateCommentDTO addComment(@RequestParam int id,
-                                               @RequestBody CreateOrUpdateCommentDTO text) {
-        return commentsService.addComment(text);
+    public Comment addComment(@RequestParam long id,
+                              @RequestBody CreateOrUpdateCommentDTO text) {
+        log.info("Эндпоинт добавления комментария выполнен");
+        return commentsService.addComment(id, text);
     }
 
     /**
@@ -64,6 +67,7 @@ public class CommentsController {
     public CreateOrUpdateCommentDTO updateComment(@RequestParam int adId,
                                                   @RequestParam int commentId,
                                                   @RequestBody CreateOrUpdateCommentDTO text) {
+        log.info("Эндпоинт обновления комментария выполнен");
         return commentsService.updateComment(adId, commentId, text);
     }
 

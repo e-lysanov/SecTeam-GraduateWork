@@ -21,4 +21,7 @@ public class Comment {
     @GeneratedValue
     private long pk;
     private String text;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ad_id")
+    private Ad ad;
 }

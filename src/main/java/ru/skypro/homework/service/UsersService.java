@@ -6,7 +6,7 @@ import ru.skypro.homework.dto.users.UpdateUserDTO;
 import ru.skypro.homework.dto.users.UserDTO;
 
 public interface UsersService {
-    NewPasswordDTO setPassword(NewPasswordDTO newPassword);
+    void setPassword(NewPasswordDTO newPassword);
     UserDTO getUser();
     UpdateUserDTO updateUser(UpdateUserDTO updateUser);
     void updateAvatar(MultipartFile avatar);
