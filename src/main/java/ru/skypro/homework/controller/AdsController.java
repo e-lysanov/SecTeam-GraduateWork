@@ -12,6 +12,7 @@ import ru.skypro.homework.dto.ads.ExtendedAdDTO;
 import ru.skypro.homework.model.Ad;
 import ru.skypro.homework.service.AdsService;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -96,7 +97,7 @@ public class AdsController {
      * @return
      */
     @PatchMapping("/{id}/image")
-    public ResponseEntity<String> updateAvatar(@RequestParam int id, @RequestBody MultipartFile image) {
+    public ResponseEntity<String> updateAvatar(@RequestParam int id, @RequestBody MultipartFile image) throws IOException {
         adsService.updateAvatar(id, image);
         log.info("Эндпоинт обновления картинки объявления выполнен");
 //        return ResponseEntity.ok(image.toString()); --- вернуть, когда настроим сохранение картинок

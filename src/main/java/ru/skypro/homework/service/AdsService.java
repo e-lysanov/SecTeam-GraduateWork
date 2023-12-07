@@ -7,6 +7,8 @@ import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
 import ru.skypro.homework.model.Ad;
 
+import java.io.IOException;
+
 public interface AdsService {
     AdsDTO getAds();
 
@@ -20,5 +22,5 @@ public interface AdsService {
 
     AdsDTO getMyAds();
 
-    AdDTO updateAvatar(long id, MultipartFile image);
+    String updateAvatar(long id, MultipartFile image) throws IOException;
 }

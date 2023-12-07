@@ -2,6 +2,7 @@ package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,13 @@ import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AdsService;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 
 /**
@@ -34,6 +40,9 @@ public class AdsServiceImpl implements AdsService {
     private final UserRepository userRepository;
     private final AdMapper adMapper;
     private final UserMapper userMapper;
+
+    @Value("${path.to.avatars.folder}")
+    private String avatarsDir;
 
     /**
      * Получение всех объявлений
@@ -146,12 +155,32 @@ public class AdsServiceImpl implements AdsService {
      * @return
      */
     @Override
-    public AdDTO updateAvatar(long id, MultipartFile image) {
+    public String updateAvatar(long id, MultipartFile image) throws IOException {
         Ad ad = adRepository.findById(id).orElse(null);
-        User user = ad.getAuthor();
-        AdDTO adDTO = adMapper.toDto(ad, user);
-//        adDTO.setImage(image.toString()); --- сохранение картинок пока не прописано
+        Path filePath = Path.of(avatarsDir, ad + "." + getExtensions(image.getOriginalFilename()));
+        Files.createDirectories(filePath.getParent());
+        Files.deleteIfExists(filePath);
+        try (
+                InputStream is = image.getInputStream();
+                OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
+                BufferedInputStream bis = new BufferedInputStream(is, 1024);
+                BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
+        ) {
+            bis.transferTo(bos);
+        }
+        // ----- Необходимо создать модель изображений (Image). Ниже примеры из прошлой работы
+//        Image adImage = findAvatar(studentId);
+//        adImage.setStudent(student);
+//        adImage.setFilePath(filePath.toString());
+//        adImage.setFileSize(avatarFile.getSize());
+//        adImage.setMediaType(avatarFile.getContentType());
+//        adImage.setData(generateDataForDB(filePath));
+//        imageRepository.save(adImage);
         log.info("Метод обновления картинки объявления выполнен");
-        return adDTO;
+        return ad.getImage();
+    }
+
+    private String getExtensions(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }
