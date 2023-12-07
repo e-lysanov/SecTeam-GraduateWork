@@ -119,10 +119,12 @@ public class AdsServiceImpl implements AdsService {
         if (ad == null) {
             return null;
         }
-            UserDTO userDTO = userMapper.toDto(ad.getAuthor());
-            Ad savedAd = adRepository.save(adMapper.updateAdToModel(createOrUpdateAd, userDTO));
-            AdDTO adDTO = adMapper.toDto(savedAd, ad.getAuthor());
-            log.info("Метод обновления объявления выполнен");
+        ad.setPrice(createOrUpdateAd.getPrice());
+        ad.setTitle(createOrUpdateAd.getTitle());
+        ad.setDescription(createOrUpdateAd.getDescription());
+        AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
+        adRepository.save(ad);
+        log.info("Метод обновления объявления выполнен");
         return adDTO;
     }
 

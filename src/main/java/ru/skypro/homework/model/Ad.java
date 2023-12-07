@@ -20,4 +20,5 @@ public class Ad {
     private long pk;
     private int price;
     private String title;
+    private String description;
 }
