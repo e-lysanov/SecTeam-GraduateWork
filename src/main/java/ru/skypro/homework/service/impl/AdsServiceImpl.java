@@ -56,13 +56,7 @@ public class AdsServiceImpl implements AdsService {
         AdsDTO adsDTOs = new AdsDTO(1, null);
         for (Ad ad : ads) {
             AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
-            AdDTO adDTOElement = new AdDTO();
-            adDTOElement.setImage(adDTO.getImage());
-            adDTOElement.setPk(adDTO.getPk());
-            adDTOElement.setAuthor(adDTO.getAuthor());
-            adDTOElement.setTitle(adDTO.getTitle());
-            adDTOElement.setPrice(adDTO.getPrice());
-            adsDTO.add(adDTOElement);
+            adsDTO.add(adDTO);
         }
         adsDTOs.setCount(adsDTO.size());
         adsDTOs.setResults(adsDTO);
