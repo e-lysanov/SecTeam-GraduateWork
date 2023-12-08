@@ -3,8 +3,7 @@ package ru.skypro.homework.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.ads.AdDTO;
@@ -69,18 +68,18 @@ public class AdsServiceImpl implements AdsService {
      *
      * @param createAdDTO
      * @param image
+     * @param authentication
      * @return
      */
     @Override
-    public AdDTO addAd(CreateOrUpdateAdDTO createAdDTO, MultipartFile image) {
-// ----- необходимо получить автора объявления
-
-//        Ad ad = adMapper.toModel(createAdDTO, createAdDTO.getAuthor());
-//
-//        AdDTO newAd = adMapper.toDto(createAdDTO, userDTO);
-//        adRepository.save(ad);
+    public AdDTO addAd(CreateOrUpdateAdDTO createAdDTO, MultipartFile image, Authentication authentication) {
+        User author = userRepository.findByEmail(authentication.getName());
+        Ad ad = adMapper.createToModel(createAdDTO);
+        ad.setAuthor(author);
+        adRepository.save(ad);
         log.info("Метод добавления объявления выполнен");
-        return null;
+
+        return adMapper.toDto(ad, author);
     }
 
     /**

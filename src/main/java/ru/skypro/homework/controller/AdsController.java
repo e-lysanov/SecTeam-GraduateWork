@@ -3,6 +3,7 @@ package ru.skypro.homework.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.ads.AdDTO;
@@ -42,9 +43,9 @@ public class AdsController {
      * @return
      */
     @PostMapping
-    public AdDTO addAd(@RequestBody CreateOrUpdateAdDTO createAdDTO, @RequestBody MultipartFile image) {
+    public AdDTO addAd(@RequestBody CreateOrUpdateAdDTO createAdDTO, @RequestBody MultipartFile image, Authentication authentication) {
         log.info("Эндпоинт добавления нового объявления выполнен");
-       return adsService.addAd(createAdDTO, image);
+       return adsService.addAd(createAdDTO, image, authentication);
     }
 
     /**

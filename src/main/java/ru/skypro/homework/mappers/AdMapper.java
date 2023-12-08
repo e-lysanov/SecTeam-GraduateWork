@@ -33,4 +33,5 @@ public interface AdMapper {
 //    @Mapping(source = "title", target = "title")
     Ad updateAdToModel(CreateOrUpdateAdDTO updateAdDTO, UserDTO userDTO);
 
+    Ad createToModel(CreateOrUpdateAdDTO createOrUpdateAdDTO);
 }
