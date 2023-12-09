@@ -100,8 +100,9 @@ public class AdsController {
      * @return
      */
     @GetMapping("/me")
-    public AdsDTO getMyAds() {
-        return adsService.getMyAds();
+    public AdsDTO getMyAds(Authentication authentication) {
+        log.info("Эндпоинт получения объявлений авторизованного пользователя выполнен");
+        return adsService.getMyAds(authentication);
     }
 
     /**
@@ -111,12 +112,14 @@ public class AdsController {
      * @param image
      * @return
      */
-    @PatchMapping("/{id}/image")
-    public ResponseEntity<String> updateAvatar(@RequestParam int id, @RequestBody MultipartFile image) throws IOException {
-        adsService.updateAvatar(id, image);
-        log.info("Эндпоинт обновления картинки объявления выполнен");
-//        return ResponseEntity.ok(image.toString()); --- вернуть, когда настроим сохранение картинок
-        return ResponseEntity.ok().build();
+    @PatchMapping(value = "/{id}/image",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    public void updateImage(@PathVariable long id,
+                              @RequestPart("Изображение") MultipartFile image) throws IOException {
+        // ----- метод не работает
+        adsService.updateImage(id, image);
+
     }
 
 }

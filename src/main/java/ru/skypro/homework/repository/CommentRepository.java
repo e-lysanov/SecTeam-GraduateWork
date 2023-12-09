@@ -9,5 +9,5 @@ import java.util.List;
  * Репозиторий для связи с таблицей комментариев из БД.
  */
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findCommentsByAdPk (long adId);
+    List<Comment> findAllByAdPk (long adId);
 }

@@ -42,13 +42,15 @@ public class CommentsServiceImpl implements CommentsService {
      */
     @Override
     public CommentsDTO getComments(long id) {
-        List<Comment> comments = commentRepository.findCommentsByAdPk(id);
-        List<CommentDTO> commentsDTO = new ArrayList<>();
+        List<Comment> comments = commentRepository.findAllByAdPk(id);
+        List<CommentDTO> commentDTOs = new ArrayList<>();
+        CommentsDTO commentsDTOs = new CommentsDTO(1, null);
         for (Comment comment : comments) {
             CommentDTO commentDTO = commentMapper.toDto(comment, comment.getAuthor());
-            commentsDTO.add(commentDTO);
+            commentDTOs.add(commentDTO);
         }
-        CommentsDTO commentsDTOs = new CommentsDTO(commentsDTO.size(), commentsDTO);
+        commentsDTOs.setCount(commentDTOs.size());
+        commentsDTOs.setResults(commentDTOs);
         log.info("Метод получения комментариев объявления выполнен");
         return commentsDTOs;
     }
@@ -61,7 +63,8 @@ public class CommentsServiceImpl implements CommentsService {
      */
     @Override
     public Comment addComment(long id, CreateOrUpdateCommentDTO text) {
-        Ad ad = adRepository.findById(id).orElse(null);
+        // ----- Метод выдаёт ошибку
+        Ad ad = adRepository.getByPk(id);
         Comment newComment = commentMapper.toCreateModel(text);
         commentRepository.save(newComment);
         newComment.setAd(ad);
@@ -77,7 +80,7 @@ public class CommentsServiceImpl implements CommentsService {
      */
     @Override
     public void deleteComment(long adId, long commentId) {
-        List<Comment> comments = commentRepository.findCommentsByAdPk(adId);
+        List<Comment> comments = commentRepository.findAllByAdPk(adId);
         for (int i = 0; i < comments.size(); i++) {
             commentRepository.deleteById(commentId);
         }
@@ -95,7 +98,7 @@ public class CommentsServiceImpl implements CommentsService {
     @Override
     public CreateOrUpdateCommentDTO updateComment(long adId, long commentId, CreateOrUpdateCommentDTO text) {
         Comment savedComment = commentRepository.findById(commentId).orElse(null);
-        List<Comment> adComments = commentRepository.findCommentsByAdPk(adId);
+        List<Comment> adComments = commentRepository.findAllByAdPk(adId);
         for (int i = 0; i < adComments.size(); i++) {
             if (i == commentId){
                 Comment newComment = commentMapper.toCreateModel(text);

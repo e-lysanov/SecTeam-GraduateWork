@@ -11,7 +11,6 @@ import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
 import ru.skypro.homework.mappers.AdMapper;
-import ru.skypro.homework.mappers.UserMapper;
 import ru.skypro.homework.model.Ad;
 import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
@@ -22,12 +21,8 @@ import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.ImageService;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 
 /**
@@ -146,8 +141,19 @@ public class AdsServiceImpl implements AdsService {
      * @return
      */
     @Override
-    public AdsDTO getMyAds() {
-        return null;
+    public AdsDTO getMyAds(Authentication authentication) {
+        User user = userRepository.findByEmail(authentication.getName());
+        List<Ad> myAds = adRepository.findAllByAuthorId(user.getId());
+        List<AdDTO> adsDTO = new ArrayList<>();
+        AdsDTO adsDTOs = new AdsDTO(1, null);
+        for (Ad ad : myAds) {
+            AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
+            adsDTO.add(adDTO);
+        }
+        adsDTOs.setCount(adsDTO.size());
+        adsDTOs.setResults(adsDTO);
+        log.info("Метод получения объявлений авторизованного пользователя выполнен");
+        return adsDTOs;
     }
 
     /**
@@ -158,31 +164,15 @@ public class AdsServiceImpl implements AdsService {
      * @return
      */
     @Override
-    public String updateAvatar(long id, MultipartFile image) throws IOException {
-        Ad ad = adRepository.findById(id).orElse(null);
-        Path filePath = Path.of(avatarsDir, ad + "." + getExtensions(image.getOriginalFilename()));
-        Files.createDirectories(filePath.getParent());
-        Files.deleteIfExists(filePath);
-        try (
-                InputStream is = image.getInputStream();
-                OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
-                BufferedInputStream bis = new BufferedInputStream(is, 1024);
-                BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
-        ) {
-            bis.transferTo(bos);
-        }
-//        Image adImage = findAdImage(id);
-//        adImage.setAd(ad);
-//        adImage.setFilePath(filePath.toString());
-//        adImage.setFileSize(avatarFile.getSize());
-//        adImage.setMediaType(avatarFile.getContentType());
-//        adImage.setData(generateDataForDB(filePath));
-//        imageRepository.save(adImage);
+    public void updateImage(long id, MultipartFile image) throws IOException {
+        // ------- метод не работает
+//        Ad updatedAd = adRepository.getByPk(id);
+//        imageService.uploadAdImage(id, image);
+//        Image uploadedImage = imageService.findAdImage(id);
+//        updatedAd.setImage(String.valueOf(uploadedImage));
+//
+//        updatedAd.setImage(uploadedImage.getFilePath());
+//        System.out.println(uploadedImage.getFilePath());
         log.info("Метод обновления картинки объявления выполнен");
-        return ad.getImage();
-    }
-
-    private String getExtensions(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }

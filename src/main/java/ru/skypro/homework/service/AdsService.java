@@ -20,7 +20,7 @@ public interface AdsService {
 
     AdDTO updateAd(long id, CreateOrUpdateAdDTO createOrUpdateAd);
 
-    AdsDTO getMyAds();
+    AdsDTO getMyAds(Authentication authentication);
 
-    String updateAvatar(long id, MultipartFile image) throws IOException;
+    void updateImage(long id, MultipartFile image) throws IOException;
 }
