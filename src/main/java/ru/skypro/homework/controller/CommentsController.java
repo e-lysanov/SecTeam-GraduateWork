@@ -3,6 +3,7 @@ package ru.skypro.homework.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.comments.CommentsDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
@@ -39,9 +40,10 @@ public class CommentsController {
      */
     @PostMapping("{id}/comments")
     public Comment addComment(@RequestParam long id,
-                              @RequestBody CreateOrUpdateCommentDTO text) {
+                              @RequestBody CreateOrUpdateCommentDTO text,
+                              Authentication authentication) {
         log.info("Эндпоинт добавления комментария выполнен");
-        return commentsService.addComment(id, text);
+        return commentsService.addComment(id, text, authentication);
     }
 
     /**
@@ -53,6 +55,7 @@ public class CommentsController {
     @DeleteMapping("{adId}/comments/{commentId}")
     public ResponseEntity<?> deleteComment(@RequestParam int adId, @RequestParam int commentId) {
         commentsService.deleteComment(adId, commentId);
+        log.info("Эндпоинт удаления комментария выполнен");
         return ResponseEntity.ok().build();
     }
 

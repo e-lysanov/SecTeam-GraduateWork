@@ -10,6 +10,6 @@ import java.util.List;
  * Репозиторий для связи с таблицей объявлений из БД.
  */
 public interface AdRepository extends JpaRepository<Ad, Long> {
-    Ad getByPk(long adId);
+    Ad findByPk(long adId);
     List<Ad> findAllByAuthorId (long userId);
 }

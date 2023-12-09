@@ -2,6 +2,7 @@ package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.ads.AdDTO;
 import ru.skypro.homework.dto.ads.AdsDTO;
@@ -16,9 +17,13 @@ import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.CommentRepository;
+import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.CommentsService;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +35,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CommentsServiceImpl implements CommentsService {
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
     private final AdRepository adRepository;
     private final CommentMapper commentMapper;
     private final AdMapper adMapper;
@@ -62,12 +68,19 @@ public class CommentsServiceImpl implements CommentsService {
      * @return
      */
     @Override
-    public Comment addComment(long id, CreateOrUpdateCommentDTO text) {
+    public Comment addComment(long id, CreateOrUpdateCommentDTO text, Authentication authentication) {
         // ----- Метод выдаёт ошибку
-        Ad ad = adRepository.getByPk(id);
+        LocalDateTime dateTime = LocalDateTime.now();
+        long millisecondsCreatedComment = dateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+        Ad ad = adRepository.findByPk(id);
+        User author = userRepository.findByEmail(authentication.getName());
         Comment newComment = commentMapper.toCreateModel(text);
         commentRepository.save(newComment);
         newComment.setAd(ad);
+        newComment.setAuthor(author);
+        newComment.setCreatedAt((int) millisecondsCreatedComment);
+        newComment.setAuthorFirstName(author.getFirstName());
+        newComment.setAuthorImage(author.getImage());
         log.info("Метод добавления комментария выполнен");
         return newComment;
     }
@@ -81,9 +94,11 @@ public class CommentsServiceImpl implements CommentsService {
     @Override
     public void deleteComment(long adId, long commentId) {
         List<Comment> comments = commentRepository.findAllByAdPk(adId);
+        Comment deletedComment = null;
         for (int i = 0; i < comments.size(); i++) {
-            commentRepository.deleteById(commentId);
+            deletedComment = commentRepository.findById(commentId).orElse(null);
         }
+        commentRepository.delete(deletedComment);
         log.info("Метод удаления объявления выполнен");
     }
 

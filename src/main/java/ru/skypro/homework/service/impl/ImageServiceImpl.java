@@ -31,7 +31,7 @@ public class ImageServiceImpl implements ImageService {
     private String imageDir;
     @Override
     public void uploadAdImage(long adId, MultipartFile image) throws IOException {
-        Ad ad = adRepository.getByPk(adId);
+        Ad ad = adRepository.findByPk(adId);
         Path filePath = Path.of(imageDir,ad + "." + getExtensions(image.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
