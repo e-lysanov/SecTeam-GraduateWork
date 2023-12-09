@@ -10,14 +10,16 @@ import ru.skypro.homework.dto.ads.AdDTO;
 import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
-import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.mappers.AdMapper;
 import ru.skypro.homework.mappers.UserMapper;
 import ru.skypro.homework.model.Ad;
+import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdRepository;
+import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.AdsService;
+import ru.skypro.homework.service.ImageService;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -37,10 +39,11 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 public class AdsServiceImpl implements AdsService {
     private final AdRepository adRepository;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
     private final AdMapper adMapper;
-    private final UserMapper userMapper;
+    private final ImageService imageService;
 
-    @Value("${path.to.avatars.folder}")
+    @Value("${path.to.images.folder}")
     private String avatarsDir;
 
     /**
@@ -72,10 +75,12 @@ public class AdsServiceImpl implements AdsService {
      * @return
      */
     @Override
-    public AdDTO addAd(CreateOrUpdateAdDTO createAdDTO, MultipartFile image, Authentication authentication) {
+    public AdDTO addAd(CreateOrUpdateAdDTO createAdDTO, MultipartFile image,
+                       Authentication authentication) throws IOException {
         User author = userRepository.findByEmail(authentication.getName());
         Ad ad = adMapper.createToModel(createAdDTO);
         ad.setAuthor(author);
+        imageService.uploadAdImage(ad.getPk(), image);
         adRepository.save(ad);
         log.info("Метод добавления объявления выполнен");
 
@@ -104,7 +109,12 @@ public class AdsServiceImpl implements AdsService {
      */
     @Override
     public void deleteAd(long id) {
-        adRepository.deleteById(id);
+        Image deletedImage = imageRepository.findByAdPk(id).orElse(null);
+        if (deletedImage != null) {
+            imageRepository.deleteById(deletedImage.getId());
+        } else {
+            adRepository.deleteById(id);
+        }
         log.info("Метод удаления объявления выполнен");
     }
 
@@ -161,9 +171,8 @@ public class AdsServiceImpl implements AdsService {
         ) {
             bis.transferTo(bos);
         }
-        // ----- Необходимо создать модель изображений (Image). Ниже примеры из прошлой работы
-//        Image adImage = findAvatar(studentId);
-//        adImage.setStudent(student);
+//        Image adImage = findAdImage(id);
+//        adImage.setAd(ad);
 //        adImage.setFilePath(filePath.toString());
 //        adImage.setFileSize(avatarFile.getSize());
 //        adImage.setMediaType(avatarFile.getContentType());

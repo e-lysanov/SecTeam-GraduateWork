@@ -2,6 +2,7 @@ package ru.skypro.homework.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +11,11 @@ import ru.skypro.homework.dto.ads.AdDTO;
 import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
-import ru.skypro.homework.model.Ad;
 import ru.skypro.homework.service.AdsService;
+import ru.skypro.homework.service.ImageService;
 
 import java.io.IOException;
-import java.util.List;
+
 
 /**
  * Контроллер для эндпоинтов объявлений.
@@ -25,9 +26,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdsController {
     private final AdsService adsService;
+    private final ImageService imageService;
 
     /**
      * Получение всех объявлений
+     *
      * @return
      */
     @GetMapping
@@ -38,18 +41,25 @@ public class AdsController {
 
     /**
      * Добавление объявления
+     *
      * @param createAdDTO
      * @param image
      * @return
      */
-    @PostMapping
-    public AdDTO addAd(@RequestBody CreateOrUpdateAdDTO createAdDTO, @RequestBody MultipartFile image, Authentication authentication) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public AdDTO addAd(@RequestPart("Объявление") CreateOrUpdateAdDTO createAdDTO,
+                       @RequestPart("Изображение") MultipartFile image,
+                       Authentication authentication) throws IOException {
         log.info("Эндпоинт добавления нового объявления выполнен");
-       return adsService.addAd(createAdDTO, image, authentication);
+        return adsService.addAd(createAdDTO, image, authentication);
+
     }
+
 
     /**
      * Получение информации об объявлении
+     *
      * @param id
      * @return
      */
@@ -61,6 +71,7 @@ public class AdsController {
 
     /**
      * Удаление объявления
+     *
      * @param id
      */
     @DeleteMapping("{id}")
@@ -72,6 +83,7 @@ public class AdsController {
 
     /**
      * Обновление информации об объявлении
+     *
      * @param id
      * @param createOrUpdateAd
      * @return
@@ -84,6 +96,7 @@ public class AdsController {
 
     /**
      * Получение объявлений авторизованного пользователя
+     *
      * @return
      */
     @GetMapping("/me")
@@ -93,6 +106,7 @@ public class AdsController {
 
     /**
      * Обновление картинки объявления
+     *
      * @param id
      * @param image
      * @return
@@ -105,4 +119,4 @@ public class AdsController {
         return ResponseEntity.ok().build();
     }
 
-    }
+}

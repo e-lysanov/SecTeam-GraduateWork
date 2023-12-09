@@ -12,7 +12,7 @@ import java.io.IOException;
 public interface AdsService {
     AdsDTO getAds();
 
-    AdDTO addAd(CreateOrUpdateAdDTO createAdDTO, MultipartFile image, Authentication authentication);
+    AdDTO addAd(CreateOrUpdateAdDTO createAdDTO, MultipartFile image, Authentication authentication) throws IOException;
 
     ExtendedAdDTO getAd(long id);
 

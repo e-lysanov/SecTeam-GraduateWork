@@ -8,4 +8,5 @@ import ru.skypro.homework.model.Ad;
  * Репозиторий для связи с таблицей объявлений из БД.
  */
 public interface AdRepository extends JpaRepository<Ad, Long> {
+    Ad getByPk(long adId);
 }
