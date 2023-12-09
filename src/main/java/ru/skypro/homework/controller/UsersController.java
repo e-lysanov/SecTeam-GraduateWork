@@ -13,6 +13,8 @@ import ru.skypro.homework.dto.users.UpdateUserDTO;
 import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.service.UsersService;
 
+import java.io.IOException;
+
 /**
  * Контроллер для эндпоинтов для работы с авторизованным пользователем.
  */
@@ -60,7 +62,7 @@ public class UsersController {
      * @return
      */
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateAvatar(@RequestBody MultipartFile avatar, Authentication authentication) {
+    public ResponseEntity<String> updateAvatar(@RequestBody MultipartFile avatar, Authentication authentication) throws IOException {
         usersService.updateAvatar(avatar, authentication);
         return ResponseEntity.ok().build();
 //        if (usersService.updateAvatar(avatar)) {

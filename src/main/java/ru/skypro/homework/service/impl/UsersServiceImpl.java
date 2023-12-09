@@ -9,9 +9,13 @@ import ru.skypro.homework.dto.users.NewPasswordDTO;
 import ru.skypro.homework.dto.users.UpdateUserDTO;
 import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.mappers.UserMapper;
+import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepository;
+import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UsersService;
+
+import java.io.IOException;
 
 /**
  * Реализация сервиса для работы с пользователем
@@ -22,6 +26,7 @@ import ru.skypro.homework.service.UsersService;
 public class UsersServiceImpl implements UsersService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final ImageService imageService;
     /**
      * Обновление пароля
      * @param newPassword
@@ -66,6 +71,10 @@ public class UsersServiceImpl implements UsersService {
      * @param avatar
      */
     @Override
-    public void updateAvatar(MultipartFile avatar, Authentication authentication) {
+    public void updateAvatar(MultipartFile avatar, Authentication authentication) throws IOException {
+        User user = userRepository.findByEmail(authentication.getName());
+        Image uploadImage = imageService.uploadUserAvatar(avatar, authentication);
+        user.setImage(uploadImage.getFilePath());
+        userRepository.save(user);
     }
 }

@@ -3,12 +3,15 @@ package ru.skypro.homework.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.model.Ad;
 import ru.skypro.homework.model.Image;
+import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdRepository;
 import ru.skypro.homework.repository.ImageRepository;
+import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.ImageService;
 
 import javax.imageio.ImageIO;
@@ -26,6 +29,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 public class ImageServiceImpl implements ImageService {
     private final AdRepository adRepository;
     private final ImageRepository imageRepository;
+    private final UserRepository userRepository;
 
     @Value("${path.to.images.folder}")
     private String imageDir;
@@ -51,6 +55,30 @@ public class ImageServiceImpl implements ImageService {
         imageAd.setData(generateDataForDB(filePath));
         imageRepository.save(imageAd);
         log.info("Картинка объявления загружена");
+    }
+    @Override
+    public Image uploadUserAvatar(MultipartFile image, Authentication authentication) throws IOException {
+        User user = userRepository.findByEmail(authentication.getName());
+        Path filePath = Path.of(imageDir,user + "." + getExtensions(image.getOriginalFilename()));
+        Files.createDirectories(filePath.getParent());
+        Files.deleteIfExists(filePath);
+        try (
+                InputStream is = image.getInputStream();
+                OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
+                BufferedInputStream bis = new BufferedInputStream(is, 1024);
+                BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
+        ) {
+            bis.transferTo(bos);
+        }
+        Image imageUser = findAdImage(user.getId());
+        imageUser.setUser(user);
+        imageUser.setFilePath(filePath.toString());
+        imageUser.setFileSize(image.getSize());
+        imageUser.setMediaType(image.getContentType());
+        imageUser.setData(generateDataForDB(filePath));
+        imageRepository.save(imageUser);
+        log.info("Аватар пользователя загружен");
+        return imageUser;
     }
 
     private String getExtensions(String fileName) {
