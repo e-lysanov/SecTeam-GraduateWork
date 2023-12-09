@@ -3,6 +3,7 @@ package ru.skypro.homework.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.users.NewPasswordDTO;
@@ -27,15 +28,29 @@ public class UsersServiceImpl implements UsersService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final ImageService imageService;
+    private final PasswordEncoder encoder;
+
     /**
      * Обновление пароля
+     *
      * @param newPassword
      * @return
      */
     @Override
-    public void setPassword(NewPasswordDTO newPassword, Authentication authentication) {
-
+    public boolean setPassword(NewPasswordDTO newPassword, Authentication authentication) {
+        User user = userRepository.findByEmail(authentication.getName());
+        String newUserPassword = encoder.encode(newPassword.getNewPassword());
+        if (encoder.matches(newPassword.getCurrentPassword(), user.getPassword())) {
+            user.setPassword(newUserPassword);
+            userRepository.save(user);
+            log.info("Пароль обновлен");
+            return true;
+        } else {
+            log.info("Пароль не обновлен");
+            return false;
+        }
     }
+
 
     /**
      * Получение информации об авторизованном пользователе

@@ -31,8 +31,14 @@ public class UsersController {
      * @return
      */
     @PostMapping("/set_password")
-    public void setPassword(@RequestBody NewPasswordDTO newPassword, Authentication authentication) {
-        usersService.setPassword(newPassword, authentication);
+    public ResponseEntity<?> setPassword(@RequestBody NewPasswordDTO newPassword, Authentication authentication) {
+        if (usersService.setPassword(newPassword, authentication)) {
+            log.info("Эндпоинт обновления пароля выполнен");
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } else {
+            log.info("Эндпоинт обновления пароля не выполнен");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     /**
