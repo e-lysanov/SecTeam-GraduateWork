@@ -91,5 +91,6 @@ public class UsersServiceImpl implements UsersService {
         Image uploadImage = imageService.uploadUserAvatar(avatar, authentication);
         user.setImage(uploadImage.getFilePath());
         userRepository.save(user);
+        log.info("Метол обновления автара пользователя выполнен");
     }
 }

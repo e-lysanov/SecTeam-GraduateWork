@@ -113,13 +113,11 @@ public class AdsController {
      * @return
      */
     @PatchMapping(value = "/{id}/image",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
-            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public void updateImage(@PathVariable long id,
-                              @RequestPart("Изображение") MultipartFile image) throws IOException {
-        // ----- метод не работает
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateImage(@PathVariable long id,
+                              @RequestBody MultipartFile image) throws IOException {
         adsService.updateImage(id, image);
-
+        return ResponseEntity.ok().build();
     }
 
 }

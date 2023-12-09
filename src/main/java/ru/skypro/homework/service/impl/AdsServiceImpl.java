@@ -166,13 +166,10 @@ public class AdsServiceImpl implements AdsService {
     @Override
     public void updateImage(long id, MultipartFile image) throws IOException {
         // ------- метод не работает
-//        Ad updatedAd = adRepository.getByPk(id);
-//        imageService.uploadAdImage(id, image);
-//        Image uploadedImage = imageService.findAdImage(id);
-//        updatedAd.setImage(String.valueOf(uploadedImage));
-//
-//        updatedAd.setImage(uploadedImage.getFilePath());
-//        System.out.println(uploadedImage.getFilePath());
+        Ad ad = adRepository.findByPk(id);
+        Image uploadImage = imageService.uploadAdImage(id, image);
+        ad.setImage(uploadImage.getFilePath());
+        adRepository.save(ad);
         log.info("Метод обновления картинки объявления выполнен");
     }
 }

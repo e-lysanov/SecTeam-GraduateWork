@@ -71,11 +71,6 @@ public class UsersController {
     public ResponseEntity<String> updateAvatar(@RequestBody MultipartFile avatar, Authentication authentication) throws IOException {
         usersService.updateAvatar(avatar, authentication);
         return ResponseEntity.ok().build();
-//        if (usersService.updateAvatar(avatar)) {
-//            return ResponseEntity.ok().build();
-//        } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
     }
 }
 
