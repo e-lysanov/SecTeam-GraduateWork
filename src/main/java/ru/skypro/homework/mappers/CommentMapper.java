@@ -20,5 +20,5 @@ public interface CommentMapper {
 
     Comment toCreateModel(CreateOrUpdateCommentDTO commentDTO);
 
-    CreateOrUpdateCommentDTO toCreateModel(Comment comment, User user);
+    CreateOrUpdateCommentDTO toCreateDTO(Comment comment, User user);
 }

@@ -111,19 +111,18 @@ public class CommentsServiceImpl implements CommentsService {
      * @return
      */
     @Override
-    public CreateOrUpdateCommentDTO updateComment(long adId, long commentId, CreateOrUpdateCommentDTO text) {
-        Comment savedComment = commentRepository.findById(commentId).orElse(null);
-        List<Comment> adComments = commentRepository.findAllByAdPk(adId);
-        for (int i = 0; i < adComments.size(); i++) {
-            if (i == commentId){
-                Comment newComment = commentMapper.toCreateModel(text);
-                commentRepository.save(newComment);
-                CreateOrUpdateCommentDTO createOrUpdateCommentDTO = commentMapper.toCreateModel(newComment, newComment.getAuthor());
-                log.info("Метод обновления комментария выполнен, текст обновлен");
-                return createOrUpdateCommentDTO;
-            }
+    public CommentDTO updateComment(long adId, long commentId, CreateOrUpdateCommentDTO text) {
+        List<Comment> comments = commentRepository.findAllByAdPk(adId);
+        Comment updatedComment = null;
+        for (Comment comment : comments) {
+            updatedComment = commentRepository.findById(commentId).orElse(null);
         }
-        log.info("Метод обновления выполнен, текст не обновлен, произошла ошибка");
-        return null;
+        User author = updatedComment.getAuthor();
+        updatedComment.setText(text.getText());
+        CommentDTO commentDTO = commentMapper.toDto(updatedComment, author);
+        commentRepository.save(updatedComment);
+        System.out.println(commentDTO);
+        log.info("Метод обновления объявления выполнен");
+        return commentDTO;
     }
 }

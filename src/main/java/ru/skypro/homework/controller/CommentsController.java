@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import ru.skypro.homework.dto.comments.CommentDTO;
 import ru.skypro.homework.dto.comments.CommentsDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
 import ru.skypro.homework.model.Comment;
@@ -67,9 +68,9 @@ public class CommentsController {
      * @return
      */
     @PatchMapping("{adId}/comments/{commentId}")
-    public CreateOrUpdateCommentDTO updateComment(@RequestParam int adId,
-                                                  @RequestParam int commentId,
-                                                  @RequestBody CreateOrUpdateCommentDTO text) {
+    public CommentDTO updateComment(@RequestParam int adId,
+                                    @RequestParam int commentId,
+                                    @RequestBody CreateOrUpdateCommentDTO text) {
         log.info("Эндпоинт обновления комментария выполнен");
         return commentsService.updateComment(adId, commentId, text);
     }
