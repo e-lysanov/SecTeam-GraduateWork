@@ -19,6 +19,7 @@ public class User {
     private String lastName;
     private String phone;
     private Role role;
+    @Column(length = 2048)
     private String image;
     private String password;
 }

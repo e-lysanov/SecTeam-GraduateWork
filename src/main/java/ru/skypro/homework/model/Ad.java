@@ -15,6 +15,7 @@ public class Ad {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User author;
+    @Column(length = 2048)
     private String image;
     @Id
     @GeneratedValue

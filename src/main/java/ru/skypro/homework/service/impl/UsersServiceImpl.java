@@ -88,9 +88,10 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public void updateAvatar(MultipartFile avatar, Authentication authentication) throws IOException {
         User user = userRepository.findByEmail(authentication.getName());
+        user.setImage(null);
         Image uploadImage = imageService.uploadUserAvatar(avatar, authentication);
         user.setImage(uploadImage.getFilePath());
         userRepository.save(user);
-        log.info("Метол обновления автара пользователя выполнен");
+        log.info("Метод обновления автара пользователя выполнен");
     }
 }

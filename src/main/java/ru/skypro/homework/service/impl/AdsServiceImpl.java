@@ -165,8 +165,8 @@ public class AdsServiceImpl implements AdsService {
      */
     @Override
     public void updateImage(long id, MultipartFile image) throws IOException {
-        // ------- метод не работает
         Ad ad = adRepository.findByPk(id);
+        ad.setImage(null);
         Image uploadImage = imageService.uploadAdImage(id, image);
         ad.setImage(uploadImage.getFilePath());
         adRepository.save(ad);

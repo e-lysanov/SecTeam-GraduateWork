@@ -17,6 +17,7 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(length = 2048)
     private String filePath;
     private long fileSize;
     private String mediaType;
