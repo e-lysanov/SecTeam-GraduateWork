@@ -68,21 +68,22 @@ public class CommentsServiceImpl implements CommentsService {
      * @return
      */
     @Override
-    public Comment addComment(long id, CreateOrUpdateCommentDTO text, Authentication authentication) {
+    public CommentDTO addComment(long id, CreateOrUpdateCommentDTO text, Authentication authentication) {
         // ----- Метод выдаёт ошибку
         LocalDateTime dateTime = LocalDateTime.now();
         long millisecondsCreatedComment = dateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
         Ad ad = adRepository.findByPk(id);
         User author = userRepository.findByEmail(authentication.getName());
         Comment newComment = commentMapper.toCreateModel(text);
-        commentRepository.save(newComment);
         newComment.setAd(ad);
         newComment.setAuthor(author);
         newComment.setCreatedAt((int) millisecondsCreatedComment);
         newComment.setAuthorFirstName(author.getFirstName());
         newComment.setAuthorImage(author.getImage());
+        commentRepository.save(newComment);
+        CommentDTO commentDTO = commentMapper.toDto(newComment, author);
         log.info("Метод добавления комментария выполнен");
-        return newComment;
+        return commentDTO;
     }
 
     /**

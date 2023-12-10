@@ -40,7 +40,7 @@ public class CommentsController {
      * @return
      */
     @PostMapping("{id}/comments")
-    public Comment addComment(@RequestParam long id,
+    public CommentDTO addComment(@RequestParam long id,
                               @RequestBody CreateOrUpdateCommentDTO text,
                               Authentication authentication) {
         log.info("Эндпоинт добавления комментария выполнен");
