@@ -164,12 +164,13 @@ public class AdsServiceImpl implements AdsService {
      * @return
      */
     @Override
-    public void updateImage(long id, MultipartFile image) throws IOException {
+    public byte[] updateImage(long id, MultipartFile image) throws IOException {
         Ad ad = adRepository.findByPk(id);
         ad.setImage(null);
-        Image uploadImage = imageService.uploadAdImage(id, image);
-        ad.setImage(uploadImage.getFilePath());
+        imageService.uploadAdImage(id, image);
+        ad.setImage(imageRepository.findByAdPk(id).orElse(null).getFilePath());
         adRepository.save(ad);
         log.info("Метод обновления картинки объявления выполнен");
+        return imageRepository.findByAdPk(id).get().getData();
     }
 }

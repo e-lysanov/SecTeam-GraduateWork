@@ -7,7 +7,7 @@ import ru.skypro.homework.model.Image;
 import java.io.IOException;
 
 public interface ImageService {
-    Image uploadAdImage(long adId, MultipartFile image) throws IOException;
+    void uploadAdImage(long adId, MultipartFile image) throws IOException;
     Image uploadUserAvatar(MultipartFile image, Authentication authentication) throws IOException;
     Image findAdImage(long adId);
 }
