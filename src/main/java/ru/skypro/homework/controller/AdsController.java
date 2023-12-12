@@ -19,7 +19,6 @@ import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
 import ru.skypro.homework.service.AdsService;
 
-import javax.validation.constraints.Min;
 import java.io.IOException;
 
 
@@ -61,7 +60,7 @@ public class AdsController {
      */
     @Operation(summary = "Добавление объявления")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
+            @ApiResponse(responseCode = "201", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = AdDTO.class))),
             @ApiResponse(responseCode = "401", content = @Content)
 })
@@ -162,7 +161,7 @@ public AdsDTO getMyAds(Authentication authentication){
 @Operation(summary = "Обновление картинки объявления")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "200", content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE,
-                schema = @Schema(type = "string", format = "byte"))),
+                schema = @Schema (type = "string", format = "byte"))),
         @ApiResponse(responseCode = "401", content = @Content),
         @ApiResponse(responseCode = "403", content = @Content),
         @ApiResponse(responseCode = "404", content = @Content)

@@ -4,12 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import ru.skypro.homework.dto.ads.AdDTO;
-import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.comments.CommentDTO;
 import ru.skypro.homework.dto.comments.CommentsDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
-import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.mappers.AdMapper;
 import ru.skypro.homework.mappers.CommentMapper;
 import ru.skypro.homework.model.Ad;
@@ -23,9 +20,7 @@ import ru.skypro.homework.service.CommentsService;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Реализация сервиса для комментариев

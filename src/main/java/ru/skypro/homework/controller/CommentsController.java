@@ -47,7 +47,7 @@ public class CommentsController {
     })
     @GetMapping("{id}/comments")
     public CommentsDTO getComments(@PathVariable long id) {
-        log.info("Эндпоинт получения комментариев объявления выполнен");
+        log.info("Эндпоинт получения комментариев объявления выполнен" + commentsService.getComments(id));
         return commentsService.getComments(id);
     }
 
@@ -70,7 +70,7 @@ public class CommentsController {
     public CommentDTO addComment(@PathVariable long id,
                               @RequestBody CreateOrUpdateCommentDTO text,
                               Authentication authentication) {
-        log.info("Эндпоинт добавления комментария выполнен");
+        log.info("Эндпоинт добавления комментария выполнен" + commentsService.addComment(id, text, authentication));
         return commentsService.addComment(id, text, authentication);
     }
 
@@ -115,7 +115,7 @@ public class CommentsController {
     public CommentDTO updateComment(@PathVariable int adId,
                                     @PathVariable int commentId,
                                     @RequestBody CreateOrUpdateCommentDTO text) {
-        log.info("Эндпоинт обновления комментария выполнен");
+        log.info("Эндпоинт обновления комментария выполнен" + commentsService.updateComment(adId, commentId, text));
         return commentsService.updateComment(adId, commentId, text);
     }
 

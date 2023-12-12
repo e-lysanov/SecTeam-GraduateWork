@@ -68,7 +68,7 @@ public class UsersController {
     })
     @GetMapping("/me")
     public UserDTO getUser(Authentication authentication) {
-        log.info("Эндпоинт получения информации авторизованного пользователя выполнен");
+        log.info("Эндпоинт получения информации авторизованного пользователя выполнен" + usersService.getUser(authentication));
         return usersService.getUser(authentication);
     }
 
@@ -85,7 +85,7 @@ public class UsersController {
     })
     @PatchMapping(value = "/me", consumes = MediaType.APPLICATION_JSON_VALUE)
     public UpdateUserDTO updateUser(@RequestBody UpdateUserDTO updateUser, Authentication authentication) {
-        log.info("Эндпоинт обновления данных авторизованного пользователя выполнен");
+        log.info("Эндпоинт обновления данных авторизованного пользователя выполнен" + usersService.updateUser(updateUser, authentication));
         return usersService.updateUser(updateUser, authentication);
     }
 
@@ -102,6 +102,7 @@ public class UsersController {
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> updateAvatar(@RequestBody MultipartFile avatar, Authentication authentication) throws IOException {
         usersService.updateAvatar(avatar, authentication);
+        log.info("Эндпоинт обновления аватара выполнен");
         return ResponseEntity.ok().build();
     }
 }

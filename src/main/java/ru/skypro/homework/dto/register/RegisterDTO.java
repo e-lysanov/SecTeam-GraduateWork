@@ -18,10 +18,11 @@ public class RegisterDTO {
     @Schema(description = "имя пользователя", minLength = 2, maxLength = 16)
     private String firstName;
 
-    @Schema(description = "фамилия пользователя", maxLength = 2, minLength = 16)
+    @Schema(description = "фамилия пользователя", maxLength = 16, minLength = 2)
     private String lastName;
 
-    @Schema(description = "телефон пользователя", pattern = "(\\+7\\s?\\(?\\d{3}\\)?\\s?\\d{3}-?\\d{2}-?\\d{2})")
+    @Schema(description = "телефон пользователя", pattern = "(\\+7\\s?\\(?\\d{3}\\)?\\s?\\d{3}-?\\d{2}-?\\d{2})",
+    example = "+7(987)6543210")
     private String phone;
 
     @Schema(description = "роль пользователя")
