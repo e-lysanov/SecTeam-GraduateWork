@@ -28,10 +28,11 @@ public class AuthController {
 
     /**
      * Авторизация пользователя
+     *
      * @param login
      * @return
      */
-    @Tag (name = "Авторизация")
+    @Tag(name = "Авторизация")
     @Operation(summary = "Авторизация пользователя")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", content = @Content),
@@ -42,31 +43,33 @@ public class AuthController {
         if (authService.login(login)) {
             log.info("Эндпоинт входа выполнен");
             return ResponseEntity.ok().build();
-        } else {
+        }
+        else {
             log.info("Эндпоинт входа не выполнен");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
-    /**
-     * Регистрация пользователя
-     * @param register
-     * @return
-     */
-    @Tag(name = "Регистрация")
-    @Operation(summary = "Регистрация пользователя")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", content = @Content),
-            @ApiResponse(responseCode = "400", content = @Content)
-    })
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterDTO register) {
-        if (authService.register(register)) {
-            log.info("Эндпоинт регистрации выполнен");
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } else {
-            log.info("Эндпоинт регистрации не выполнен");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+        /**
+         * Регистрация пользователя
+         * @param register
+         * @return
+         */
+        @Tag(name = "Регистрация")
+        @Operation(summary = "Регистрация пользователя")
+        @ApiResponses(value = {
+                @ApiResponse(responseCode = "201", content = @Content),
+                @ApiResponse(responseCode = "400", content = @Content)
+        })
+        @PostMapping("/register")
+        public ResponseEntity<?> register (@RequestBody RegisterDTO register){
+            if (authService.register(register)) {
+                log.info("Эндпоинт регистрации выполнен");
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+            } else {
+                log.info("Эндпоинт регистрации не выполнен");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
         }
     }
-}

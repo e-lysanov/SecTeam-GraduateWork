@@ -27,6 +27,7 @@ import java.io.IOException;
  */
 @Tag (name = "Объявления")
 @Slf4j
+@CrossOrigin(value = "http://localhost:3000")
 @RestController
 @RequestMapping("/ads")
 @RequiredArgsConstructor
