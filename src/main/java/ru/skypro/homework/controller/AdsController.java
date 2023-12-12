@@ -19,6 +19,7 @@ import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
 import ru.skypro.homework.service.AdsService;
 
+import javax.validation.constraints.Min;
 import java.io.IOException;
 
 
