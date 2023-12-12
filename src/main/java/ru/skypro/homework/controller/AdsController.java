@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -16,7 +17,6 @@ import ru.skypro.homework.dto.ads.AdDTO;
 import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
-import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.service.AdsService;
 
 import java.io.IOException;
@@ -25,13 +25,13 @@ import java.io.IOException;
 /**
  * Контроллер для эндпоинтов объявлений.
  */
+@Tag (name = "Объявления")
 @Slf4j
 @RestController
 @RequestMapping("/ads")
 @RequiredArgsConstructor
 public class AdsController {
     private final AdsService adsService;
-    private final ImageRepository imageRepository;
 
     /**
      * Получение всех объявлений
