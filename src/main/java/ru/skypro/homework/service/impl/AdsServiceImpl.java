@@ -2,7 +2,6 @@ package ru.skypro.homework.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,9 +37,6 @@ public class AdsServiceImpl implements AdsService {
     private final AdMapper adMapper;
     private final ImageService imageService;
 
-    @Value("${path.to.images.folder}")
-    private String avatarsDir;
-
     /**
      * Получение всех объявлений
      *
@@ -74,10 +70,11 @@ public class AdsServiceImpl implements AdsService {
                        Authentication authentication) throws IOException {
         User author = userRepository.findByEmail(authentication.getName());
         Ad ad = adMapper.createToModel(createAdDTO);
-        ad.setAuthor(author);
         adRepository.save(ad);
         Image uploadedImage = imageService.uploadAdImage(ad.getPk(), image);
+        ad.setAuthor(author);
         ad.setImage(uploadedImage.getFilePath());
+        adRepository.save(ad);
         log.info("Метод добавления объявления выполнен");
         return adMapper.toDto(ad, author);
     }
@@ -122,7 +119,7 @@ public class AdsServiceImpl implements AdsService {
      */
     @Override
     public AdDTO updateAd(long id, CreateOrUpdateAdDTO createOrUpdateAd) {
-        Ad ad = adRepository.findById(id).orElse(null);
+        Ad ad = adRepository.findByPk(id);
         if (ad == null) {
             return null;
         }

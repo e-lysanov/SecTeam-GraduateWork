@@ -23,6 +23,12 @@ import java.nio.file.Path;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
+/**
+ * Класс для работы с картинками.
+ * Имеет поле директории для сохранения картинок
+ * 2 основных метода для сохранения картинок объявлений и пользователей
+ * Остальные методы вспомогательные
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -31,12 +37,23 @@ public class ImageServiceImpl implements ImageService {
     private final ImageRepository imageRepository;
     private final UserRepository userRepository;
 
-    @Value("${path.to.images.folder}")
-    private String imageDir;
+    @Value("${path.to.adImages.folder}")
+    private String adImageDir;
+
+    @Value("${path.to.avatars.folder}")
+    private String avatars;
+
+    /**
+     * Добавление картинки для объявления
+     * @param adId
+     * @param image
+     * @return
+     * @throws IOException
+     */
     @Override
     public Image uploadAdImage(long adId, MultipartFile image) throws IOException {
         Ad ad = adRepository.findByPk(adId);
-        Path filePath = Path.of(imageDir,ad + "." + getExtensions(image.getOriginalFilename()));
+        Path filePath = Path.of(adImageDir,ad.getPk() + "." + getExtensions(image.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try (
@@ -57,10 +74,18 @@ public class ImageServiceImpl implements ImageService {
         log.info("Картинка объявления загружена" + imageAd);
         return imageAd;
     }
+
+    /**
+     * Добавление аватара пользователю
+     * @param image
+     * @param authentication
+     * @return
+     * @throws IOException
+     */
     @Override
     public Image uploadUserAvatar(MultipartFile image, Authentication authentication) throws IOException {
         User user = userRepository.findByEmail(authentication.getName());
-        Path filePath = Path.of(imageDir,user + "." + getExtensions(image.getOriginalFilename()));
+        Path filePath = Path.of(avatars,user.getId() + "." + getExtensions(image.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try (
