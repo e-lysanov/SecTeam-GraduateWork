@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.comments.CommentDTO;
 import ru.skypro.homework.dto.comments.CommentsDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
-import ru.skypro.homework.mappers.AdMapper;
 import ru.skypro.homework.mappers.CommentMapper;
 import ru.skypro.homework.model.Ad;
 import ru.skypro.homework.model.Comment;
@@ -33,7 +32,6 @@ public class CommentsServiceImpl implements CommentsService {
     private final UserRepository userRepository;
     private final AdRepository adRepository;
     private final CommentMapper commentMapper;
-    private final AdMapper adMapper;
 
     /**
      * Получение комментариев объявления
@@ -52,7 +50,7 @@ public class CommentsServiceImpl implements CommentsService {
         }
         commentsDTOs.setCount(commentDTOs.size());
         commentsDTOs.setResults(commentDTOs);
-        log.info("Метод получения комментариев объявления выполнен");
+        log.info("Метод получения комментариев объявления выполнен" + comments);
         return commentsDTOs;
     }
 
@@ -64,7 +62,6 @@ public class CommentsServiceImpl implements CommentsService {
      */
     @Override
     public CommentDTO addComment(long id, CreateOrUpdateCommentDTO text, Authentication authentication) {
-        // ----- Метод выдаёт ошибку
         LocalDateTime dateTime = LocalDateTime.now();
         long millisecondsCreatedComment = dateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
         Ad ad = adRepository.findByPk(id);
@@ -77,7 +74,7 @@ public class CommentsServiceImpl implements CommentsService {
         newComment.setAuthorImage(author.getImage());
         commentRepository.save(newComment);
         CommentDTO commentDTO = commentMapper.toDto(newComment, author);
-        log.info("Метод добавления комментария выполнен");
+        log.info("Метод добавления комментария выполнен" + newComment);
         return commentDTO;
     }
 
@@ -95,7 +92,7 @@ public class CommentsServiceImpl implements CommentsService {
             deletedComment = commentRepository.findById(commentId).orElse(null);
         }
         commentRepository.delete(deletedComment);
-        log.info("Метод удаления объявления выполнен");
+        log.info("Метод удаления комментария выполнен");
     }
 
     /**
@@ -118,7 +115,7 @@ public class CommentsServiceImpl implements CommentsService {
         CommentDTO commentDTO = commentMapper.toDto(updatedComment, author);
         commentRepository.save(updatedComment);
         System.out.println(commentDTO);
-        log.info("Метод обновления объявления выполнен");
+        log.info("Метод обновления комментария выполнен" + updatedComment);
         return commentDTO;
     }
 }

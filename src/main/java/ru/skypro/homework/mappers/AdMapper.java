@@ -26,6 +26,7 @@ public interface AdMapper {
     Ad toModel(AdDTO adDTO, UserDTO userDTO);
 
     @Mapping(source = "user.firstName", target = "authorFirstName")
+    @Mapping(source = "user.lastName", target = "authorLastName")
     @Mapping(source = "ad.image", target = "image")
     ExtendedAdDTO toExtendedDTO(Ad ad, User user);
 

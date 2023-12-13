@@ -86,7 +86,7 @@ public class UsersController {
     })
     @PatchMapping(value = "/me", consumes = MediaType.APPLICATION_JSON_VALUE)
     public UpdateUserDTO updateUser(@RequestBody UpdateUserDTO updateUser, Authentication authentication) {
-        log.info("Эндпоинт обновления данных авторизованного пользователя выполнен" + usersService.updateUser(updateUser, authentication));
+        log.info("Эндпоинт обновления данных авторизованного пользователя выполнен");
         return usersService.updateUser(updateUser, authentication);
     }
 

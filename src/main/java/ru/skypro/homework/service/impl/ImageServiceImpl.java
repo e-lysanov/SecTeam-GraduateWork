@@ -64,7 +64,7 @@ public class ImageServiceImpl implements ImageService {
         ) {
             bis.transferTo(bos);
         }
-        Image imageAd = findAdImage(ad.getPk());
+        Image imageAd = findImage(ad.getPk());
         imageAd.setAd(ad);
         imageAd.setFilePath(filePath.toString());
         imageAd.setFileSize(image.getSize());
@@ -96,14 +96,14 @@ public class ImageServiceImpl implements ImageService {
         ) {
             bis.transferTo(bos);
         }
-        Image imageUser = findAdImage(user.getId());
+        Image imageUser = findImage(user.getId());
         imageUser.setUser(user);
         imageUser.setFilePath(filePath.toString());
         imageUser.setFileSize(image.getSize());
         imageUser.setMediaType(image.getContentType());
         imageUser.setData(generateDataForDB(filePath));
         imageRepository.save(imageUser);
-        log.info("Аватар пользователя загружен");
+        log.info("Аватар пользователя загружен" + imageUser);
         return imageUser;
     }
 
@@ -111,7 +111,7 @@ public class ImageServiceImpl implements ImageService {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
     @Override
-    public Image findAdImage(long id) {
+    public Image findImage(long id) {
         return imageRepository.findByAdPk(id).orElse(new Image());
     }
 

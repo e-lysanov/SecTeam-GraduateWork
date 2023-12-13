@@ -71,7 +71,7 @@ public class CommentsController {
     public CommentDTO addComment(@PathVariable long id,
                               @RequestBody CreateOrUpdateCommentDTO text,
                               Authentication authentication) {
-        log.info("Эндпоинт добавления комментария выполнен" + commentsService.addComment(id, text, authentication));
+        log.info("Эндпоинт добавления комментария выполнен");
         return commentsService.addComment(id, text, authentication);
     }
 
@@ -116,7 +116,7 @@ public class CommentsController {
     public CommentDTO updateComment(@PathVariable int adId,
                                     @PathVariable int commentId,
                                     @RequestBody CreateOrUpdateCommentDTO text) {
-        log.info("Эндпоинт обновления комментария выполнен" + commentsService.updateComment(adId, commentId, text));
+        log.info("Эндпоинт обновления комментария выполнен");
         return commentsService.updateComment(adId, commentId, text);
     }
 

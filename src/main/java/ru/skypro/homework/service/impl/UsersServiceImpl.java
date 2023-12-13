@@ -59,7 +59,7 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public UserDTO getUser(Authentication authentication) {
         User user = userRepository.findByEmail(authentication.getName());
-        log.info("Метод получения информации авторизованного пользователя выполнен");
+        log.info("Метод получения информации авторизованного пользователя выполнен" + user);
         return userMapper.toDto(user);
     }
 
@@ -76,7 +76,7 @@ public class UsersServiceImpl implements UsersService {
         user.setPhone(updateUser.getPhone());
         userRepository.save(user);
         UpdateUserDTO updateUserDTO = userMapper.toUpdateDto(user);
-        log.info("Метод обновления данных авторизованного пользователя выполнен");
+        log.info("Метод обновления данных авторизованного пользователя выполнен" + user);
         return updateUserDTO;
     }
 
@@ -92,6 +92,6 @@ public class UsersServiceImpl implements UsersService {
         Image uploadImage = imageService.uploadUserAvatar(avatar, authentication);
         user.setImage(uploadImage.getFilePath());
         userRepository.save(user);
-        log.info("Метод обновления автара пользователя выполнен");
+        log.info("Метод обновления автара пользователя выполнен" + user);
     }
 }

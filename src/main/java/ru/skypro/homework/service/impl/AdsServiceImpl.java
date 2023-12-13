@@ -21,6 +21,7 @@ import ru.skypro.homework.service.ImageService;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -53,7 +54,7 @@ public class AdsServiceImpl implements AdsService {
         }
         adsDTOs.setCount(adsDTO.size());
         adsDTOs.setResults(adsDTO);
-        log.info("Метод получения всех объявлений выполнен");
+        log.info("Метод получения всех объявлений выполнен" + ads);
         return adsDTOs;
     }
 
@@ -75,7 +76,7 @@ public class AdsServiceImpl implements AdsService {
         ad.setAuthor(author);
         ad.setImage(uploadedImage.getFilePath());
         adRepository.save(ad);
-        log.info("Метод добавления объявления выполнен");
+        log.info("Метод добавления объявления выполнен" + ad);
         return adMapper.toDto(ad, author);
     }
 
@@ -87,10 +88,10 @@ public class AdsServiceImpl implements AdsService {
      */
     @Override
     public ExtendedAdDTO getAd(long id) {
-        Ad ad = adRepository.findById(id).orElse(null);
+        Ad ad = adRepository.findByPk(id);
         User user = ad.getAuthor();
         ExtendedAdDTO extendedAdDTO = adMapper.toExtendedDTO(ad, user);
-        log.info("Метод получения информации об объявлении выполнен");
+        log.info("Метод получения информации об объявлении выполнен" + ad);
         return extendedAdDTO;
     }
 
@@ -128,7 +129,7 @@ public class AdsServiceImpl implements AdsService {
         ad.setDescription(createOrUpdateAd.getDescription());
         AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
         adRepository.save(ad);
-        log.info("Метод обновления объявления выполнен");
+        log.info("Метод обновления объявления выполнен" + ad);
         return adDTO;
     }
 
@@ -149,7 +150,7 @@ public class AdsServiceImpl implements AdsService {
         }
         adsDTOs.setCount(adsDTO.size());
         adsDTOs.setResults(adsDTO);
-        log.info("Метод получения объявлений авторизованного пользователя выполнен");
+        log.info("Метод получения объявлений авторизованного пользователя выполнен" + myAds);
         return adsDTOs;
     }
 
@@ -167,7 +168,7 @@ public class AdsServiceImpl implements AdsService {
         imageService.uploadAdImage(id, image);
         ad.setImage(imageRepository.findByAdPk(id).orElse(null).getFilePath());
         adRepository.save(ad);
-        log.info("Метод обновления картинки объявления выполнен");
+        log.info("Метод обновления картинки объявления выполнен" + ad.getImage());
         return imageRepository.findByAdPk(id).get().getData();
     }
 }

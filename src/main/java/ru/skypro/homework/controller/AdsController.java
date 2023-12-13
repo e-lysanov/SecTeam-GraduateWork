@@ -131,7 +131,7 @@ public ResponseEntity<?> deleteAd(@PathVariable int id){
 @PatchMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
         produces = MediaType.APPLICATION_JSON_VALUE)
 public AdDTO updateAd(@PathVariable int id,@RequestBody CreateOrUpdateAdDTO createOrUpdateAd){
-        log.info("Эндпоинт обновления объявления выполнен"+adsService.updateAd(id,createOrUpdateAd));
+        log.info("Эндпоинт обновления объявления выполнен");
         return adsService.updateAd(id,createOrUpdateAd);
         }
 
