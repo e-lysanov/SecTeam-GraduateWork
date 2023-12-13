@@ -70,7 +70,7 @@ public class AdsController {
 public AdDTO addAd(@RequestPart("Объявление") CreateOrUpdateAdDTO createAdDTO,
 @RequestPart("Изображение") MultipartFile image,
         Authentication authentication)throws IOException{
-        log.info("Эндпоинт добавления нового объявления выполнен"+adsService.addAd(createAdDTO,image,authentication));
+        log.info("Эндпоинт добавления нового объявления выполнен");
         return adsService.addAd(createAdDTO,image,authentication);
         }
 

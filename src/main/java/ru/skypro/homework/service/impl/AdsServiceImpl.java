@@ -75,10 +75,10 @@ public class AdsServiceImpl implements AdsService {
         User author = userRepository.findByEmail(authentication.getName());
         Ad ad = adMapper.createToModel(createAdDTO);
         ad.setAuthor(author);
-        imageService.uploadAdImage(ad.getPk(), image);
         adRepository.save(ad);
+        Image uploadedImage = imageService.uploadAdImage(ad.getPk(), image);
+        ad.setImage(uploadedImage.getFilePath());
         log.info("Метод добавления объявления выполнен");
-
         return adMapper.toDto(ad, author);
     }
 

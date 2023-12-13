@@ -34,7 +34,7 @@ public class ImageServiceImpl implements ImageService {
     @Value("${path.to.images.folder}")
     private String imageDir;
     @Override
-    public void uploadAdImage(long adId, MultipartFile image) throws IOException {
+    public Image uploadAdImage(long adId, MultipartFile image) throws IOException {
         Ad ad = adRepository.findByPk(adId);
         Path filePath = Path.of(imageDir,ad + "." + getExtensions(image.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -47,15 +47,15 @@ public class ImageServiceImpl implements ImageService {
         ) {
             bis.transferTo(bos);
         }
-        Image imageAd = findAdImage(adId);
+        Image imageAd = findAdImage(ad.getPk());
         imageAd.setAd(ad);
         imageAd.setFilePath(filePath.toString());
         imageAd.setFileSize(image.getSize());
         imageAd.setMediaType(image.getContentType());
         imageAd.setData(generateDataForDB(filePath));
         imageRepository.save(imageAd);
-        log.info("Картинка объявления загружена");
-//        return imageAd;
+        log.info("Картинка объявления загружена" + imageAd);
+        return imageAd;
     }
     @Override
     public Image uploadUserAvatar(MultipartFile image, Authentication authentication) throws IOException {
