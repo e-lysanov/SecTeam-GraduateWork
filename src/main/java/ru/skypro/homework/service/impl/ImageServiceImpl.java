@@ -66,7 +66,6 @@ public class ImageServiceImpl implements ImageService {
         }
         Image imageAd = findAdImage(ad.getPk());
         imageAd.setAd(ad);
-    //    imageAd.setFilePath(filePath.toString());
         imageAd.setFileSize(image.getSize());
         imageAd.setMediaType(image.getContentType());
         imageAd.setData(generateDataForDB(filePath));
@@ -98,7 +97,6 @@ public class ImageServiceImpl implements ImageService {
         }
         Image imageUser = findUserImage(user.getId());
         imageUser.setUser(user);
-//        imageUser.setFilePath(filePath.toString());
         imageUser.setFileSize(image.getSize());
         imageUser.setMediaType(image.getContentType());
         imageUser.setData(generateDataForDB(filePath));

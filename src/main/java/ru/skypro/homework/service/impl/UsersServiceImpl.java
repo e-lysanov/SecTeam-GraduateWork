@@ -12,7 +12,6 @@ import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.mappers.UserMapper;
 import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
-import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UsersService;
@@ -27,7 +26,6 @@ import java.io.IOException;
 @Slf4j
 public class UsersServiceImpl implements UsersService {
     private final UserRepository userRepository;
-    private final ImageRepository imageRepository;
     private final UserMapper userMapper;
     private final ImageService imageService;
     private final PasswordEncoder encoder;

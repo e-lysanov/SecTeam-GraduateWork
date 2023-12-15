@@ -18,7 +18,7 @@ public class Comment {
     @OneToOne(cascade = CascadeType.ALL)
     private Image authorImage;
     private String authorFirstName;
-    private int createdAt;
+    private long createdAt;
     @Id
     @GeneratedValue
     private long pk;
@@ -26,4 +26,5 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ad_id")
     private Ad ad;
+
 }

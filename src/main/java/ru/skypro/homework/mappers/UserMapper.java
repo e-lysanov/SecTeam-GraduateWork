@@ -27,8 +27,9 @@ public interface UserMapper {
 
     @Named("imageToString")
     default String imageToString(Image image){
-
-        return "/users/image/"+ image.getId();
-
+        if (image == null) {
+            return null;
+        }
+            return "/users/image/" + image.getId();
     }
 }

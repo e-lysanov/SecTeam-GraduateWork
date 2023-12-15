@@ -17,8 +17,8 @@ import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.CommentsService;
 
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,13 +63,13 @@ public class CommentsServiceImpl implements CommentsService {
     @Override
     public CommentDTO addComment(long id, CreateOrUpdateCommentDTO text, Authentication authentication) {
         LocalDateTime dateTime = LocalDateTime.now();
-        long millisecondsCreatedComment = dateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+        long millisecondsCreatedComment = new Date().getTime();
         Ad ad = adRepository.findByPk(id);
         User author = userRepository.findByEmail(authentication.getName());
         Comment newComment = commentMapper.toCreateModel(text);
         newComment.setAd(ad);
         newComment.setAuthor(author);
-        newComment.setCreatedAt((int) millisecondsCreatedComment);
+        newComment.setCreatedAt( millisecondsCreatedComment);
         newComment.setAuthorFirstName(author.getFirstName());
         newComment.setAuthorImage(author.getImage());
         commentRepository.save(newComment);
