@@ -62,7 +62,7 @@ public class UsersServiceImpl implements UsersService {
     public UserDTO getUser(Authentication authentication) {
         User user = userRepository.findByEmail(authentication.getName());
         log.info("Метод получения информации авторизованного пользователя выполнен" + user);
-        return userMapper.toDto(user, user.getImage());
+        return userMapper.toDto(user);
     }
 
     /**

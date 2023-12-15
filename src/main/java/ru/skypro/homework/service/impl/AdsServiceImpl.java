@@ -48,7 +48,7 @@ public class AdsServiceImpl implements AdsService {
         List<AdDTO> adsDTO = new ArrayList<>();
         AdsDTO adsDTOs = new AdsDTO(1, null);
         for (Ad ad : ads) {
-            AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor(), ad.getImage());
+            AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
             adsDTO.add(adDTO);
         }
         adsDTOs.setCount(adsDTO.size());
@@ -76,7 +76,7 @@ public class AdsServiceImpl implements AdsService {
         ad.setImage(uploadedImage);
         adRepository.save(ad);
         log.info("Метод добавления объявления выполнен" + ad);
-        return adMapper.toDto(ad, author, ad.getImage());
+        return adMapper.toDto(ad, author);
     }
 
     /**
@@ -126,7 +126,7 @@ public class AdsServiceImpl implements AdsService {
         ad.setPrice(createOrUpdateAd.getPrice());
         ad.setTitle(createOrUpdateAd.getTitle());
         ad.setDescription(createOrUpdateAd.getDescription());
-        AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor(), ad.getImage());
+        AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
         adRepository.save(ad);
         log.info("Метод обновления объявления выполнен" + ad);
         return adDTO;
@@ -144,7 +144,7 @@ public class AdsServiceImpl implements AdsService {
         List<AdDTO> adsDTO = new ArrayList<>();
         AdsDTO adsDTOs = new AdsDTO(1, null);
         for (Ad ad : myAds) {
-            AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor(), ad.getImage());
+            AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
             adsDTO.add(adDTO);
         }
         adsDTOs.setCount(adsDTO.size());

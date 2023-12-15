@@ -2,10 +2,12 @@ package ru.skypro.homework.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 import ru.skypro.homework.dto.comments.CommentDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
 import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.model.Comment;
+import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
 
 /**
@@ -14,11 +16,15 @@ import ru.skypro.homework.model.User;
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
     @Mapping(source = "user.id", target = "author")
+    @Mapping(source = "user.image", target = "authorImage", qualifiedByName = "imageToString")
     CommentDTO toDto(Comment comment, User user);
-    @Mapping(source = "userDTO", target = "author")
-    Comment toModel(CommentDTO commentDTO, UserDTO userDTO);
 
     Comment toCreateModel(CreateOrUpdateCommentDTO commentDTO);
 
-    CreateOrUpdateCommentDTO toCreateDTO(Comment comment, User user);
+    @Named("imageToString")
+    default String imageToString(Image image){
+
+        return "/user/avatar/"+ image.getId();
+
+    }
 }

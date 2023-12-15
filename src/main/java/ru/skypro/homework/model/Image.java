@@ -20,7 +20,6 @@ public class Image {
     private String filePath;
     private long fileSize;
     private String mediaType;
-    @Lob
     private byte[] data;
     @OneToOne (cascade = ALL)
     private User user;
