@@ -69,7 +69,7 @@ public class CommentsServiceImpl implements CommentsService {
         Comment newComment = commentMapper.toCreateModel(text);
         newComment.setAd(ad);
         newComment.setAuthor(author);
-        newComment.setCreatedAt( millisecondsCreatedComment);
+        newComment.setCreatedAt(millisecondsCreatedComment);
         newComment.setAuthorFirstName(author.getFirstName());
         newComment.setAuthorImage(author.getImage());
         commentRepository.save(newComment);
@@ -90,6 +90,9 @@ public class CommentsServiceImpl implements CommentsService {
         Comment deletedComment = null;
         for (int i = 0; i < comments.size(); i++) {
             deletedComment = commentRepository.findById(commentId).orElse(null);
+            deletedComment.setAd(null);
+            deletedComment.setAuthor(null);
+            deletedComment.setAuthorImage(null);
         }
         commentRepository.delete(deletedComment);
         log.info("Метод удаления комментария выполнен");

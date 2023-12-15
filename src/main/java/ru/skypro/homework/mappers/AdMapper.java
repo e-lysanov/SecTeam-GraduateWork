@@ -35,7 +35,7 @@ public interface AdMapper {
         if (image == null) {
             return null;
         }
-        return "/users/image/"+ image.getId();
+        return "/images/image/"+ image.getId();
 
     }
 }

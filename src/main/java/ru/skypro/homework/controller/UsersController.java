@@ -107,11 +107,11 @@ public class UsersController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/image/{id}")
-    public ResponseEntity<byte[]> getUsersImage(@PathVariable Integer id, Authentication authentication) {
-        log.info("Эндпоинт получения картинки пользователя выполнен");
-       return ResponseEntity.ok(imageService.getById(id));
-    }
+//    @GetMapping("/image/{id}")
+//    public ResponseEntity<byte[]> getUsersImage(@PathVariable Integer id, Authentication authentication) {
+//        log.info("Эндпоинт получения картинки пользователя выполнен");
+//       return ResponseEntity.ok(imageService.getById(id));
+//    }
 
 }
 

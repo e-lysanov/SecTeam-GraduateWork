@@ -30,6 +30,6 @@ public interface UserMapper {
         if (image == null) {
             return null;
         }
-            return "/users/image/" + image.getId();
+            return "/images/image/" + image.getId();
     }
 }
