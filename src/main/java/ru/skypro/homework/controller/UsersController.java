@@ -37,6 +37,7 @@ public class UsersController {
 
     /**
      * Обновление пароля
+     *
      * @param newPassword
      * @return
      */
@@ -59,6 +60,7 @@ public class UsersController {
 
     /**
      * Получение информации об авторизованном пользователе
+     *
      * @return
      */
     @Operation(summary = "Получение информации об авторизованном пользователе")
@@ -75,6 +77,7 @@ public class UsersController {
 
     /**
      * Обновление информации об авторизованном пользователе
+     *
      * @param updateUser
      * @return
      */
@@ -92,6 +95,7 @@ public class UsersController {
 
     /**
      * Обновление аватара авторизованного пользователя
+     *
      * @param image
      * @return
      */
@@ -106,12 +110,5 @@ public class UsersController {
         log.info("Эндпоинт обновления аватара выполнен");
         return ResponseEntity.ok().build();
     }
-
-//    @GetMapping("/image/{id}")
-//    public ResponseEntity<byte[]> getUsersImage(@PathVariable Integer id, Authentication authentication) {
-//        log.info("Эндпоинт получения картинки пользователя выполнен");
-//       return ResponseEntity.ok(imageService.getById(id));
-//    }
-
 }
 

@@ -108,15 +108,32 @@ public class ImageServiceImpl implements ImageService {
     private String getExtensions(String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
+
+    /**
+     * Метод поиска картинки по id объявления, к которому она добавлена
+     * @param id
+     * @return
+     */
     @Override
     public Image findAdImage(long id) {
         return imageRepository.findByAdPk(id).orElse(new Image());
     }
 
+    /**
+     * Метод поиска автара пользователя по его id
+     * @param id
+     * @return
+     */
     @Override
     public Image findUserImage (long id) {
         return imageRepository.findByUserId(id).orElse(new Image());
     }
+
+    /**
+     * Метод поиска изображения по его id
+     * @param id
+     * @return
+     */
     @Override
     public byte[] getById (long id) {
         Image image = imageRepository.findById(id).orElseThrow();
