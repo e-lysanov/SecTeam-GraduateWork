@@ -15,7 +15,8 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User author;
-    private String authorImage;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image authorImage;
     private String authorFirstName;
     private int createdAt;
     @Id

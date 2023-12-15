@@ -26,7 +26,7 @@ import ru.skypro.homework.service.CommentsService;
 @Slf4j
 @CrossOrigin(value = "http://localhost:3000")
 @RestController
-@RequestMapping("/comments")
+@RequestMapping("/ads")
 @RequiredArgsConstructor
 public class CommentsController {
 

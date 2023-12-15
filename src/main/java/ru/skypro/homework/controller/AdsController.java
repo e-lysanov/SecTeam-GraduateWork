@@ -176,5 +176,4 @@ public ResponseEntity<byte[]>updateImage(@PathVariable long id,
         log.info("Эндпоинт обновления картинки выполнен");
         return ResponseEntity.ok().build();
         }
-
         }

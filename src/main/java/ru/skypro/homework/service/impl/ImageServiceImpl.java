@@ -64,7 +64,7 @@ public class ImageServiceImpl implements ImageService {
         ) {
             bis.transferTo(bos);
         }
-        Image imageAd = findImage(ad.getPk());
+        Image imageAd = findAdImage(ad.getPk());
         imageAd.setAd(ad);
         imageAd.setFilePath(filePath.toString());
         imageAd.setFileSize(image.getSize());
@@ -96,7 +96,7 @@ public class ImageServiceImpl implements ImageService {
         ) {
             bis.transferTo(bos);
         }
-        Image imageUser = findImage(user.getId());
+        Image imageUser = findUserImage(user.getId());
         imageUser.setUser(user);
         imageUser.setFilePath(filePath.toString());
         imageUser.setFileSize(image.getSize());
@@ -111,8 +111,13 @@ public class ImageServiceImpl implements ImageService {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
     @Override
-    public Image findImage(long id) {
+    public Image findAdImage(long id) {
         return imageRepository.findByAdPk(id).orElse(new Image());
+    }
+
+    @Override
+    public Image findUserImage (long id) {
+        return imageRepository.findByUserId(id).orElse(new Image());
     }
 
     private byte[] generateDataForDB(Path filePath) throws IOException {

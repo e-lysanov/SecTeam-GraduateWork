@@ -12,6 +12,7 @@ import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.mappers.UserMapper;
 import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
+import ru.skypro.homework.repository.ImageRepository;
 import ru.skypro.homework.repository.UserRepository;
 import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UsersService;
@@ -26,6 +27,7 @@ import java.io.IOException;
 @Slf4j
 public class UsersServiceImpl implements UsersService {
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
     private final UserMapper userMapper;
     private final ImageService imageService;
     private final PasswordEncoder encoder;
@@ -60,7 +62,7 @@ public class UsersServiceImpl implements UsersService {
     public UserDTO getUser(Authentication authentication) {
         User user = userRepository.findByEmail(authentication.getName());
         log.info("Метод получения информации авторизованного пользователя выполнен" + user);
-        return userMapper.toDto(user);
+        return userMapper.toDto(user, user.getImage());
     }
 
     /**
@@ -90,8 +92,9 @@ public class UsersServiceImpl implements UsersService {
         User user = userRepository.findByEmail(authentication.getName());
         user.setImage(null);
         Image uploadImage = imageService.uploadUserAvatar(avatar, authentication);
-        user.setImage(uploadImage.getFilePath());
+        user.setImage(uploadImage);
         userRepository.save(user);
         log.info("Метод обновления автара пользователя выполнен" + user);
     }
+
 }

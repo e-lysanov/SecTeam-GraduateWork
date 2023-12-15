@@ -19,6 +19,7 @@ import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.users.NewPasswordDTO;
 import ru.skypro.homework.dto.users.UpdateUserDTO;
 import ru.skypro.homework.dto.users.UserDTO;
+import ru.skypro.homework.service.ImageService;
 import ru.skypro.homework.service.UsersService;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class UsersController {
     private final UsersService usersService;
+    private final ImageService imageService;
 
     /**
      * Обновление пароля
@@ -92,7 +94,7 @@ public class UsersController {
 
     /**
      * Обновление аватара авторизованного пользователя
-     * @param avatar
+     * @param image
      * @return
      */
     @Operation(summary = "Обновление аватара авторизованного пользователя")
@@ -101,8 +103,8 @@ public class UsersController {
             @ApiResponse(responseCode = "401", content = @Content)
     })
     @PatchMapping(value = "/me/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> updateAvatar(@RequestBody MultipartFile avatar, Authentication authentication) throws IOException {
-        usersService.updateAvatar(avatar, authentication);
+    public ResponseEntity<String> updateAvatar(@RequestBody MultipartFile image, Authentication authentication) throws IOException {
+        usersService.updateAvatar(image, authentication);
         log.info("Эндпоинт обновления аватара выполнен");
         return ResponseEntity.ok().build();
     }

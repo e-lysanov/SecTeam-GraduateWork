@@ -21,7 +21,6 @@ import ru.skypro.homework.service.ImageService;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -49,7 +48,7 @@ public class AdsServiceImpl implements AdsService {
         List<AdDTO> adsDTO = new ArrayList<>();
         AdsDTO adsDTOs = new AdsDTO(1, null);
         for (Ad ad : ads) {
-            AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
+            AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor(), ad.getImage());
             adsDTO.add(adDTO);
         }
         adsDTOs.setCount(adsDTO.size());
@@ -74,10 +73,10 @@ public class AdsServiceImpl implements AdsService {
         adRepository.save(ad);
         Image uploadedImage = imageService.uploadAdImage(ad.getPk(), image);
         ad.setAuthor(author);
-        ad.setImage(uploadedImage.getFilePath());
+        ad.setImage(uploadedImage);
         adRepository.save(ad);
         log.info("Метод добавления объявления выполнен" + ad);
-        return adMapper.toDto(ad, author);
+        return adMapper.toDto(ad, author, ad.getImage());
     }
 
     /**
@@ -127,7 +126,7 @@ public class AdsServiceImpl implements AdsService {
         ad.setPrice(createOrUpdateAd.getPrice());
         ad.setTitle(createOrUpdateAd.getTitle());
         ad.setDescription(createOrUpdateAd.getDescription());
-        AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
+        AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor(), ad.getImage());
         adRepository.save(ad);
         log.info("Метод обновления объявления выполнен" + ad);
         return adDTO;
@@ -145,7 +144,7 @@ public class AdsServiceImpl implements AdsService {
         List<AdDTO> adsDTO = new ArrayList<>();
         AdsDTO adsDTOs = new AdsDTO(1, null);
         for (Ad ad : myAds) {
-            AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor());
+            AdDTO adDTO = adMapper.toDto(ad, ad.getAuthor(), ad.getImage());
             adsDTO.add(adDTO);
         }
         adsDTOs.setCount(adsDTO.size());
@@ -166,9 +165,10 @@ public class AdsServiceImpl implements AdsService {
         Ad ad = adRepository.findByPk(id);
         ad.setImage(null);
         imageService.uploadAdImage(id, image);
-        ad.setImage(imageRepository.findByAdPk(id).orElse(null).getFilePath());
+        ad.setImage(imageRepository.findByAdPk(id).orElse(null));
         adRepository.save(ad);
         log.info("Метод обновления картинки объявления выполнен" + ad.getImage());
         return imageRepository.findByAdPk(id).get().getData();
     }
+
 }

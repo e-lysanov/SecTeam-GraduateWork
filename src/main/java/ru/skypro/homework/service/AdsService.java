@@ -23,4 +23,5 @@ public interface AdsService {
     AdsDTO getMyAds(Authentication authentication);
 
     byte[] updateImage(long id, MultipartFile image) throws IOException;
+
 }

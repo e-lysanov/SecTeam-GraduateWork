@@ -8,6 +8,7 @@ import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
 import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.model.Ad;
+import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public interface AdMapper {
     @Mapping(source = "user.id", target = "author")
     @Mapping(source = "ad.image", target = "image")
-    AdDTO toDto(Ad ad, User user);
+    AdDTO toDto(Ad ad, User user, Image image);
 
     @Mapping(source = "userDTO", target = "author")
     @Mapping(source = "adDTO.image", target = "image")
@@ -29,9 +30,6 @@ public interface AdMapper {
     @Mapping(source = "user.lastName", target = "authorLastName")
     @Mapping(source = "ad.image", target = "image")
     ExtendedAdDTO toExtendedDTO(Ad ad, User user);
-
-//    @Mapping(source = "userDTO", target = "author")
-//    @Mapping(source = "title", target = "title")
     Ad updateAdToModel(CreateOrUpdateAdDTO updateAdDTO, UserDTO userDTO);
 
     Ad createToModel(CreateOrUpdateAdDTO createOrUpdateAdDTO);
