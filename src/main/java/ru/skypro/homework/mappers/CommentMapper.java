@@ -16,7 +16,7 @@ import ru.skypro.homework.model.User;
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
     @Mapping(source = "user.id", target = "author")
-    @Mapping(source = "user.image", target = "authorImage", qualifiedByName = "imageToString")
+    @Mapping(source = "user.image", qualifiedByName = "imageToString", target = "authorImage")
     CommentDTO toDto(Comment comment, User user);
 
     Comment toCreateModel(CreateOrUpdateCommentDTO commentDTO);
@@ -24,7 +24,7 @@ public interface CommentMapper {
     @Named("imageToString")
     default String imageToString(Image image){
 
-        return "/user/avatar/"+ image.getId();
+        return "/users/image/"+ image.getId();
 
     }
 }

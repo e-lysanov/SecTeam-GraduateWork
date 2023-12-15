@@ -25,7 +25,7 @@ public interface AdMapper {
 
     @Mapping(source = "user.firstName", target = "authorFirstName")
     @Mapping(source = "user.lastName", target = "authorLastName")
-    @Mapping(source = "ad.image", target = "image", qualifiedByName = "imageToString")
+    @Mapping(source = "ad.image", qualifiedByName = "imageToString", target = "image")
     ExtendedAdDTO toExtendedDTO(Ad ad, User user);
 
     Ad createToModel(CreateOrUpdateAdDTO createOrUpdateAdDTO);
@@ -33,7 +33,7 @@ public interface AdMapper {
     @Named("imageToString")
     default String imageToString(Image image){
 
-        return "/ads/adImage/"+ image.getId();
+        return "/users/image/"+ image.getId();
 
     }
 }

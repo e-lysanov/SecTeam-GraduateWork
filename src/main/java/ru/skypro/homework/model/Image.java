@@ -17,7 +17,7 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String filePath;
+//    private String filePath;
     private long fileSize;
     private String mediaType;
     private byte[] data;
@@ -26,4 +26,10 @@ public class Image {
     @OneToOne (cascade = ALL)
     private Ad ad;
 
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id=" + id +
+                '}';
+    }
 }

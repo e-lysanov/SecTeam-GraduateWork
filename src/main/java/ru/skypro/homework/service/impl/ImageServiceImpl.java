@@ -61,12 +61,12 @@ public class ImageServiceImpl implements ImageService {
                 OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
                 BufferedInputStream bis = new BufferedInputStream(is, 1024);
                 BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
-        ) {
+       ) {
             bis.transferTo(bos);
         }
         Image imageAd = findAdImage(ad.getPk());
         imageAd.setAd(ad);
-        imageAd.setFilePath(filePath.toString());
+    //    imageAd.setFilePath(filePath.toString());
         imageAd.setFileSize(image.getSize());
         imageAd.setMediaType(image.getContentType());
         imageAd.setData(generateDataForDB(filePath));
@@ -98,7 +98,7 @@ public class ImageServiceImpl implements ImageService {
         }
         Image imageUser = findUserImage(user.getId());
         imageUser.setUser(user);
-        imageUser.setFilePath(filePath.toString());
+//        imageUser.setFilePath(filePath.toString());
         imageUser.setFileSize(image.getSize());
         imageUser.setMediaType(image.getContentType());
         imageUser.setData(generateDataForDB(filePath));
@@ -118,6 +118,11 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public Image findUserImage (long id) {
         return imageRepository.findByUserId(id).orElse(new Image());
+    }
+    @Override
+    public byte[] getById (long id) {
+        Image image = imageRepository.findById(id).orElseThrow();
+        return image.getData();
     }
 
     private byte[] generateDataForDB(Path filePath) throws IOException {

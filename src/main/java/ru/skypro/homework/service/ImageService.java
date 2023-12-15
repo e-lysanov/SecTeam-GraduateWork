@@ -11,4 +11,5 @@ public interface ImageService {
     Image uploadUserAvatar(MultipartFile image, Authentication authentication) throws IOException;
     Image findAdImage(long adId);
     Image findUserImage(long id);
+    byte[] getById(long id);
 }

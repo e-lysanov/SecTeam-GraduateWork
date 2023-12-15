@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,7 +19,9 @@ import ru.skypro.homework.dto.ads.AdDTO;
 import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
+import ru.skypro.homework.model.Image;
 import ru.skypro.homework.service.AdsService;
+import ru.skypro.homework.service.ImageService;
 
 import java.io.IOException;
 
@@ -33,6 +37,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AdsController {
     private final AdsService adsService;
+    private final ImageService imageService;
 
     /**
      * Получение всех объявлений
@@ -176,4 +181,5 @@ public ResponseEntity<byte[]>updateImage(@PathVariable long id,
         log.info("Эндпоинт обновления картинки выполнен");
         return ResponseEntity.ok().build();
         }
+
         }
