@@ -4,10 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import ru.skypro.homework.dto.ads.AdDTO;
-import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
-import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.model.Ad;
 import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
@@ -35,7 +33,7 @@ public interface AdMapper {
         if (image == null) {
             return null;
         }
-        return "/images/image/"+ image.getId();
+        return "/images/"+ image.getId();
 
     }
 }

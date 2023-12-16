@@ -29,7 +29,7 @@ public class ImageController {
             @ApiResponse(responseCode = "401", content = @Content),
             @ApiResponse(responseCode = "404", content = @Content)
     })
-    @GetMapping("/image/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<byte[]> getImage(@PathVariable Integer id, Authentication authentication) {
         log.info("Эндпоинт получения картинки выполнен");
         return ResponseEntity.ok(imageService.getById(id));

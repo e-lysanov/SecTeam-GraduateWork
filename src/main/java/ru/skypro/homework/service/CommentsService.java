@@ -4,9 +4,6 @@ import org.springframework.security.core.Authentication;
 import ru.skypro.homework.dto.comments.CommentDTO;
 import ru.skypro.homework.dto.comments.CommentsDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
-import ru.skypro.homework.model.Comment;
-
-import java.util.List;
 
 public interface CommentsService {
     CommentsDTO getComments(long id);

@@ -5,7 +5,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import ru.skypro.homework.dto.comments.CommentDTO;
 import ru.skypro.homework.dto.comments.CreateOrUpdateCommentDTO;
-import ru.skypro.homework.dto.users.UserDTO;
 import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.Image;
 import ru.skypro.homework.model.User;
@@ -26,7 +25,7 @@ public interface CommentMapper {
         if (image == null) {
             return null;
         }
-        return "/images/image/"+ image.getId();
+        return "/images/"+ image.getId();
 
     }
 }

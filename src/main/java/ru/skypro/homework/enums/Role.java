@@ -5,8 +5,4 @@ package ru.skypro.homework.enums;
  */
 public enum Role {
     USER, ADMIN;
-
-//    public String getCode() {
-//        return null;
-//    }
 }

@@ -18,7 +18,6 @@ import ru.skypro.homework.dto.ads.AdsDTO;
 import ru.skypro.homework.dto.ads.CreateOrUpdateAdDTO;
 import ru.skypro.homework.dto.ads.ExtendedAdDTO;
 import ru.skypro.homework.service.AdsService;
-import ru.skypro.homework.service.ImageService;
 
 import java.io.IOException;
 
